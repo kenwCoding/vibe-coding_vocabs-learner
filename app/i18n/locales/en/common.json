@@ -1,0 +1,117 @@
+{
+  "app": {
+    "name": "VocabMaster",
+    "tagline": "AI-Powered Vocabulary Learning Platform"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "vocabulary": "Vocabulary",
+    "tests": "Tests",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "start": "Start",
+    "submit": "Submit",
+    "next": "Next",
+    "previous": "Previous",
+    "login": "Log In",
+    "signup": "Sign Up",
+    "logout": "Log Out"
+  },
+  "home": {
+    "hero": {
+      "title": "Master Vocabulary with AI",
+      "description": "Enhance your vocabulary learning with personalized AI-powered tests and analysis.",
+      "cta": "Get Started"
+    },
+    "features": {
+      "title": "Features",
+      "customTests": {
+        "title": "Customized Tests",
+        "description": "Create and take vocabulary tests tailored to your needs."
+      },
+      "tracking": {
+        "title": "Performance Tracking",
+        "description": "Track your progress and see your improvement over time."
+      },
+      "aiAnalysis": {
+        "title": "AI Analysis",
+        "description": "Get personalized insights and recommendations based on your performance."
+      },
+      "adaptive": {
+        "title": "Adaptive Learning",
+        "description": "Tests adjust to your skill level for optimal learning."
+      }
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome to your dashboard",
+    "stats": {
+      "title": "Your Stats",
+      "testsCompleted": "Tests Completed",
+      "wordsLearned": "Words Learned",
+      "accuracy": "Accuracy",
+      "streak": "Learning Streak"
+    },
+    "recentTests": {
+      "title": "Recent Tests",
+      "noTests": "You haven't taken any tests yet.",
+      "viewAll": "View All Tests"
+    },
+    "recommendations": {
+      "title": "Recommended for You",
+      "basedOn": "Based on your performance"
+    }
+  },
+  "tests": {
+    "create": {
+      "title": "Create Test",
+      "nameLabel": "Test Name",
+      "typeLabel": "Test Type",
+      "difficultyLabel": "Difficulty",
+      "wordsCountLabel": "Number of Words",
+      "createButton": "Create Test"
+    },
+    "types": {
+      "mcq": "Multiple Choice",
+      "matching": "Matching",
+      "fillBlanks": "Fill in the Blanks",
+      "flashcards": "Flashcards"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "adaptive": "Adaptive"
+    },
+    "results": {
+      "title": "Test Results",
+      "score": "You scored {{score}} out of {{total}}",
+      "accuracy": "Accuracy: {{accuracy}}%",
+      "timeTaken": "Time Taken: {{time}}",
+      "reviewButton": "Review Answers",
+      "retakeButton": "Retake Test"
+    }
+  },
+  "vocabulary": {
+    "search": "Search vocabulary",
+    "categories": "Categories",
+    "wordList": "Word List",
+    "noWords": "No words found.",
+    "addWord": "Add Word",
+    "import": "Import Words",
+    "export": "Export Words",
+    "wordDetails": {
+      "definition": "Definition",
+      "translation": "Translation",
+      "example": "Example",
+      "partOfSpeech": "Part of Speech"
+    }
+  }
+} 

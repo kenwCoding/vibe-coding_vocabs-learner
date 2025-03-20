@@ -1,0 +1,117 @@
+{
+  "app": {
+    "name": "词汇掌握",
+    "tagline": "AI 驱动的词汇学习平台"
+  },
+  "nav": {
+    "home": "首页",
+    "dashboard": "仪表板",
+    "vocabulary": "词汇",
+    "tests": "测试",
+    "analytics": "分析",
+    "settings": "设置"
+  },
+  "buttons": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "start": "开始",
+    "submit": "提交",
+    "next": "下一步",
+    "previous": "上一步",
+    "login": "登录",
+    "signup": "注册",
+    "logout": "退出"
+  },
+  "home": {
+    "hero": {
+      "title": "用AI掌握词汇",
+      "description": "通过个性化的AI驱动测试和分析，提升您的词汇学习。",
+      "cta": "开始使用"
+    },
+    "features": {
+      "title": "功能特点",
+      "customTests": {
+        "title": "定制化测试",
+        "description": "创建并参加适合您需求的词汇测试。"
+      },
+      "tracking": {
+        "title": "表现追踪",
+        "description": "追踪您的进度，查看您随时间的提升。"
+      },
+      "aiAnalysis": {
+        "title": "AI分析",
+        "description": "根据您的表现获取个性化洞察和推荐。"
+      },
+      "adaptive": {
+        "title": "自适应学习",
+        "description": "测试会根据您的技能水平调整，以实现最佳学习效果。"
+      }
+    }
+  },
+  "dashboard": {
+    "welcome": "欢迎来到您的仪表板",
+    "stats": {
+      "title": "您的统计",
+      "testsCompleted": "已完成测试",
+      "wordsLearned": "已学习单词",
+      "accuracy": "准确率",
+      "streak": "学习连续天数"
+    },
+    "recentTests": {
+      "title": "最近测试",
+      "noTests": "您还没有参加任何测试。",
+      "viewAll": "查看所有测试"
+    },
+    "recommendations": {
+      "title": "为您推荐",
+      "basedOn": "基于您的表现"
+    }
+  },
+  "tests": {
+    "create": {
+      "title": "创建测试",
+      "nameLabel": "测试名称",
+      "typeLabel": "测试类型",
+      "difficultyLabel": "难度",
+      "wordsCountLabel": "单词数量",
+      "createButton": "创建测试"
+    },
+    "types": {
+      "mcq": "选择题",
+      "matching": "匹配题",
+      "fillBlanks": "填空题",
+      "flashcards": "抽认卡"
+    },
+    "difficulty": {
+      "easy": "简单",
+      "medium": "中等",
+      "hard": "困难",
+      "adaptive": "自适应"
+    },
+    "results": {
+      "title": "测试结果",
+      "score": "您得分 {{score}} / {{total}}",
+      "accuracy": "准确率: {{accuracy}}%",
+      "timeTaken": "耗时: {{time}}",
+      "reviewButton": "查看答案",
+      "retakeButton": "重新测试"
+    }
+  },
+  "vocabulary": {
+    "search": "搜索词汇",
+    "categories": "分类",
+    "wordList": "单词列表",
+    "noWords": "未找到单词。",
+    "addWord": "添加单词",
+    "import": "导入单词",
+    "export": "导出单词",
+    "wordDetails": {
+      "definition": "定义",
+      "translation": "翻译",
+      "example": "例句",
+      "partOfSpeech": "词性"
+    }
+  }
+} 
