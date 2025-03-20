@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router';
 import { Link } from 'react-router';
 import type { Route } from '../../+types/root';
 import { T } from '../../components/common/T';
-import { Container } from '../../components/ui';
-import Card, { CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
+import { Container, Card, CardHeader, CardTitle, CardContent } from '../../components/ui';
 import AppLayout from '../../components/layout/AppLayout';
 import { useUserStore, useVocabularyStore, useTestStore } from '../../store';
 
@@ -52,7 +51,7 @@ export default function Dashboard() {
   
   return (
     <AppLayout>
-      <Container>
+      <Container maxWidth="lg">
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
             <T keyName="dashboard.welcome" values={{ username: user.username }}>
