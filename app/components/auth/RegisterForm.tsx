@@ -266,7 +266,7 @@ export function RegisterForm() {
         <p className="text-sm text-gray-600 dark:text-gray-400">
           <T keyName="auth.register.alreadyHaveAccount">Already have an account?</T>{' '}
           <Link 
-            to="/auth/login" 
+            to="/login" 
             className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
             <T keyName="auth.register.login">Sign in</T>

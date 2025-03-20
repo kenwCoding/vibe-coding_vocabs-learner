@@ -20,6 +20,9 @@ All notable changes to this project will be documented in this file.
 ## [0.3.6] - 2025-03-28
 ### Fixed
 - [Fix] Fixed navigation in Welcome component to use React Router navigation instead of direct page loads
+- [Fix] Fixed incorrect registration link in login form (changed from "/auth/register" to "/register")
+- [Fix] Fixed incorrect forgot password link in login form (changed from "/auth/forgot-password" to "/forgot-password")
+- [Fix] Fixed incorrect login link in register form (changed from "/auth/login" to "/login")
 - [Enhance] Improved client-side routing for better user experience and proper SPA behavior
 
 ## [0.3.5] - 2025-03-27
