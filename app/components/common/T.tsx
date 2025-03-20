@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
 /**
  * Props for the Text (T) component
@@ -7,15 +7,17 @@ import React, { PropsWithChildren } from 'react';
  * @property {Record<string, any>} [values] - Values to interpolate into the translation
  * @property {string} [ns] - Namespace for the translation
  * @property {string} [className] - Additional CSS classes to apply
- * @property {keyof JSX.IntrinsicElements} [tag] - HTML tag to render the text in
+ * @property {React.ElementType} [tag] - HTML tag to render the text in
+ * @property {React.ReactNode} [children] - Children elements (optional fallback)
  */
-type TProps = PropsWithChildren<{
+interface TProps {
   keyName: string;
   values?: Record<string, any>;
   ns?: string;
   className?: string;
-  tag?: keyof JSX.IntrinsicElements;
-}>;
+  tag?: React.ElementType;
+  children?: React.ReactNode;
+}
 
 /**
  * T (Text) component for internationalization

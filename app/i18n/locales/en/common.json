@@ -9,7 +9,8 @@
     "vocabulary": "Vocabulary",
     "tests": "Tests",
     "analytics": "Analytics",
-    "settings": "Settings"
+    "settings": "Settings",
+    "components": "UI Components"
   },
   "buttons": {
     "save": "Save",
@@ -22,7 +23,14 @@
     "previous": "Previous",
     "login": "Log In",
     "signup": "Sign Up",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "text": "Text",
+    "disabled": "Disabled",
+    "small": "Small",
+    "large": "Large",
+    "action": "Action"
   },
   "home": {
     "hero": {
@@ -112,6 +120,25 @@
       "translation": "Translation",
       "example": "Example",
       "partOfSpeech": "Part of Speech"
+    }
+  },
+  "examples": {
+    "showcase": {
+      "title": "VocabMaster UI Components",
+      "buttons": "Buttons",
+      "cards": "Cards",
+      "inputs": "Inputs",
+      "badges": "Badges",
+      "cardSmallShadow": "Small Shadow",
+      "cardMediumShadow": "Medium Shadow",
+      "cardContent": "This card has a small shadow",
+      "badgeDefault": "Default",
+      "badgeSecondary": "Secondary",
+      "badgeSuccess": "Success",
+      "badgeWarning": "Warning",
+      "badgeError": "Error",
+      "badgeInfo": "Info",
+      "badgeOutline": "Outline"
     }
   }
 } 
