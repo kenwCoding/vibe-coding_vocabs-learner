@@ -23,6 +23,10 @@ All notable changes to this project will be documented in this file.
 - [Add] Implemented UI component library including Button, Card, Input, Container, and Badge components
 - [Add] Created component showcase for testing and development 
 - [Add] Created utility functions for Tailwind class merging
+- [Add] Zustand store implementation for user authentication, vocabulary management, and testing
+- [Add] Created login and registration pages with form validation
+- [Add] Implemented dashboard for authenticated users
+- [Add] Added user menu in navbar with authentication-aware display
 
 ### Fixed
 - [Fix] Tailwind v4 compatibility issues with utility classes
