@@ -38,8 +38,8 @@ export const REGISTER_MUTATION = gql`
 `;
 
 export const VERIFY_TOKEN_QUERY = gql`
-  query VerifyToken {
-    verifyToken {
+  query VerifyCurrentUser {
+    me {
       id
       username
       email
@@ -79,7 +79,7 @@ export interface LoginInput {
 }
 
 export interface VerifyTokenResponse {
-  verifyToken: User | null;
+  me: User | null;
 }
 
 // Authentication utilities

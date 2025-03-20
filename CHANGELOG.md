@@ -27,9 +27,11 @@ All notable changes to this project will be documented in this file.
 ### [Fix]
 - Fixed GraphQL registration mutation by updating incorrect type references from RegisterInput to RegisterUserInput
 - Fixed GraphQL login mutation to use LoginInput structure instead of individual parameters
+- Fixed user authentication query to use 'me' instead of 'verifyToken'
 - Aligned client-side GraphQL operations with backend schema definitions
 - Resolved type mismatch in authentication context for user registration
 - Updated login functionality to match server schema requirements
+- Fixed token verification process to use the correct query field
 
 ## [0.3.6] - 2025-03-28
 

@@ -3,7 +3,7 @@ import { gql } from '../lib/gql-utils';
 // Queries
 export const GET_CURRENT_USER = gql`
   query GetCurrentUser {
-    getCurrentUser {
+    me {
       id
       username
       email

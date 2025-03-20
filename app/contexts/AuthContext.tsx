@@ -59,8 +59,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { refetch } = useQuery<VerifyTokenResponse>(VERIFY_TOKEN_QUERY, {
     skip: !checkAuth(), // Skip if no token is available
     onCompleted: (data) => {
-      if (data?.verifyToken) {
-        setUser(data.verifyToken);
+      if (data?.me) {
+        setUser(data.me);
       } else {
         // Token is invalid, remove it
         removeToken();
