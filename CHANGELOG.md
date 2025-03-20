@@ -17,6 +17,11 @@ All notable changes to this project will be documented in this file.
 - [Enhance] - Improvements to existing features that go beyond regular updates
 - [API] - API integration, GraphQL operations, and backend communication
 
+## [0.3.6] - 2025-03-28
+### Fixed
+- [Fix] Fixed navigation in Welcome component to use React Router navigation instead of direct page loads
+- [Enhance] Improved client-side routing for better user experience and proper SPA behavior
+
 ## [0.3.5] - 2025-03-27
 ### Fixed
 - [Fix] Fixed GraphQL test component to not use introspection which is disabled on the server
