@@ -10,7 +10,17 @@
     "tests": "Tests",
     "analytics": "Analytics",
     "settings": "Settings",
-    "components": "UI Components"
+    "components": "UI Components",
+    "profile": "Your Profile",
+    "signOut": "Sign out",
+    "login": "Sign in",
+    "register": "Register"
+  },
+  "language": {
+    "switcher": "Language",
+    "select": "Select language",
+    "en": "English",
+    "zh": "Traditional Chinese"
   },
   "buttons": {
     "save": "Save",

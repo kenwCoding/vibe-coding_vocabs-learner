@@ -17,6 +17,14 @@ All notable changes to this project will be documented in this file.
 - [Enhance] - Improvements to existing features that go beyond regular updates
 - [API] - API integration, GraphQL operations, and backend communication
 
+## [0.3.2] - 2025-03-24
+### Added
+- [Add] Added language switcher in the navbar to toggle between English and Traditional Chinese
+- [Enhance] Improved i18n configuration to better support language switching
+
+### Improved
+- [Update] Enhanced i18n translation files with language selection related keys
+
 ## [0.3.1] - 2025-03-23
 ### Fixed
 - [Fix] Enhanced T component to better handle missing translations with fallback to children
@@ -29,6 +37,7 @@ All notable changes to this project will be documented in this file.
 - [Refactor] Consolidated Apollo Client configuration into a single file
 - [Refactor] Removed redundant T component implementation in favor of the enhanced common/T component
 - [Refactor] Updated GraphQL utility functions with re-exported hooks using proper paths
+- [Update] Converted Chinese localization from Simplified Chinese to Traditional Chinese
 
 ### Removed
 - [Remove] Deleted redundant Apollo Provider implementations
