@@ -15,6 +15,50 @@ All notable changes to this project will be documented in this file.
 - [Design] - UI/UX design, visual elements, or design system components
 - [Style] - Visual changes, layout adjustments, and styling improvements
 - [Enhance] - Improvements to existing features that go beyond regular updates
+- [API] - API integration, GraphQL operations, and backend communication
+
+## [0.3.1] - 2025-03-23
+### Fixed
+- [Fix] Enhanced T component to better handle missing translations with fallback to children
+- [Fix] Added debug logging in development mode for missing translations
+- [Fix] Fixed Apollo Client imports to use explicit module paths to avoid CommonJS issues
+- [Fix] Fixed wrong usage of T component in showcase components
+- [Fix] Added missing translations for common elements and GraphQL test component
+
+### Improved
+- [Refactor] Consolidated Apollo Client configuration into a single file
+- [Refactor] Removed redundant T component implementation in favor of the enhanced common/T component
+- [Refactor] Updated GraphQL utility functions with re-exported hooks using proper paths
+
+### Removed
+- [Remove] Deleted redundant Apollo Provider implementations
+- [Remove] Removed old T.tsx component in favor of common/T.tsx
+
+## [0.3.0] - 2025-03-22
+### Added
+- [Add] Apollo Client integration for GraphQL API communication
+- [Add] Created authentication context for global user state management
+- [Add] Implemented LoginForm and RegisterForm components with validation
+- [Add] Created Alert component for user feedback messages
+- [Add] Added Spinner component for loading states
+- [Add] Created utility functions for class names, error handling, and more
+- [API] Added authService with GraphQL mutations for login and register
+- [API] Added userService for profile management operations
+- [API] Added vocabularyService with GraphQL operations for vocabulary items
+- [API] Added testService with GraphQL operations for vocabulary tests
+- [Add] Environment configuration for API endpoints in different environments
+
+### Updated 
+- [Update] Refactored auth routes to use GraphQL authentication
+- [Update] Enhanced UI components to support dark mode and accessibility
+- [Update] Updated backend integration documentation
+- [Enhance] Improved form validation with detailed error messages
+- [Update] Refactored login and registration forms for better UX
+
+### Configuration
+- [Chore] Added Apollo Client dependencies for GraphQL integration
+- [Chore] Added clsx and tailwind-merge for class name utilities
+- [Config] Environment files for development and production
 
 ## [0.2.1] - 2025-03-21
 ### Added

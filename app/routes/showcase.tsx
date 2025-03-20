@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
 import Card, { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../components/ui/Card';
-import { T } from '../components/T';
+import { T } from '../components/common/T';
 import type { Route } from '../+types/root';
 import AppLayout from '../components/layout/AppLayout';
 
@@ -126,17 +126,17 @@ export default function ComponentsShowcase() {
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Translation Component</h2>
         <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-sm">
           <div className="mb-4">
-            <p className="text-gray-700 mb-2">App Name: <T t="app.name" /></p>
-            <p className="text-gray-700 mb-2">Tagline: <T t="app.tagline" /></p>
+            <p className="text-gray-700 mb-2">App Name: <T keyName="app.name">VocabMaster</T></p>
+            <p className="text-gray-700 mb-2">Tagline: <T keyName="app.tagline">AI-Powered Vocabulary Learning Platform</T></p>
           </div>
           
           <div className="mb-4">
             <p className="text-gray-700 mb-2">Navigation:</p>
             <div className="flex flex-wrap gap-4">
-              <Button variant="secondary" size="sm"><T t="nav.home" /></Button>
-              <Button variant="secondary" size="sm"><T t="nav.dashboard" /></Button>
-              <Button variant="secondary" size="sm"><T t="nav.tests" /></Button>
-              <Button variant="secondary" size="sm"><T t="nav.vocabulary" /></Button>
+              <Button variant="secondary" size="sm"><T keyName="nav.home">Home</T></Button>
+              <Button variant="secondary" size="sm"><T keyName="nav.dashboard">Dashboard</T></Button>
+              <Button variant="secondary" size="sm"><T keyName="nav.tests">Tests</T></Button>
+              <Button variant="secondary" size="sm"><T keyName="nav.vocabulary">Vocabulary</T></Button>
             </div>
           </div>
           
@@ -145,14 +145,14 @@ export default function ComponentsShowcase() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card>
                 <CardContent>
-                  <CardTitle><T t="home.features.customTests.title" /></CardTitle>
-                  <p className="mt-2 text-gray-600"><T t="home.features.customTests.description" /></p>
+                  <CardTitle><T keyName="home.features.customTests.title">Customized Tests</T></CardTitle>
+                  <p className="mt-2 text-gray-600"><T keyName="home.features.customTests.description">Create tests tailored to your specific learning goals and vocabulary level.</T></p>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent>
-                  <CardTitle><T t="home.features.performance.title" /></CardTitle>
-                  <p className="mt-2 text-gray-600"><T t="home.features.performance.description" /></p>
+                  <CardTitle><T keyName="home.features.performance.title">Performance Tracking</T></CardTitle>
+                  <p className="mt-2 text-gray-600"><T keyName="home.features.performance.description">Monitor your progress with detailed statistics and insights.</T></p>
                 </CardContent>
               </Card>
             </div>

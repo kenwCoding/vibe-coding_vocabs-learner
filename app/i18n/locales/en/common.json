@@ -140,5 +140,15 @@
       "badgeInfo": "Info",
       "badgeOutline": "Outline"
     }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error: {{message}}"
+  },
+  "gql": {
+    "test": {
+      "title": "GraphQL Test Component",
+      "success": "If you can see this, the gql function is working properly!"
+    }
   }
 } 

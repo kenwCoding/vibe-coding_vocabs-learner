@@ -127,11 +127,11 @@
       "title": "词汇掌握 UI 组件",
       "buttons": "按钮",
       "cards": "卡片",
-      "inputs": "输入框",
+      "inputs": "输入",
       "badges": "徽章",
       "cardSmallShadow": "小阴影",
       "cardMediumShadow": "中阴影",
-      "cardContent": "这个卡片有小阴影",
+      "cardContent": "此卡片有小阴影",
       "badgeDefault": "默认",
       "badgeSecondary": "次要",
       "badgeSuccess": "成功",
@@ -139,6 +139,16 @@
       "badgeError": "错误",
       "badgeInfo": "信息",
       "badgeOutline": "轮廓"
+    }
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误: {{message}}"
+  },
+  "gql": {
+    "test": {
+      "title": "GraphQL 测试组件",
+      "success": "如果您能看到此消息，则 gql 函数正常工作！"
     }
   }
 } 
