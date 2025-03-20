@@ -19,6 +19,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### [API]
+- Added GraphQL schema definition files for backend API
+- Implemented type definitions for User, VocabItem, VocabList, Test, and related entities
+- Added query and mutation definitions for the GraphQL API
+
 ## [0.3.6] - 2025-03-28
 
 ### [Fix]
