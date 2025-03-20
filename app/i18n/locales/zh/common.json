@@ -1,29 +1,33 @@
 {
   "app": {
-    "name": "词汇掌握",
-    "tagline": "AI 驱动的词汇学习平台"
+    "name": "詞彙掌握",
+    "tagline": "AI 驅動的詞彙學習平台"
   },
   "nav": {
-    "home": "首页",
-    "dashboard": "仪表板",
-    "vocabulary": "词汇",
-    "tests": "测试",
+    "home": "首頁",
+    "dashboard": "儀表板",
+    "vocabulary": "詞彙",
+    "tests": "測試",
     "analytics": "分析",
-    "settings": "设置",
-    "components": "UI 组件"
+    "settings": "設置",
+    "components": "UI 組件",
+    "profile": "個人資料",
+    "signOut": "登出",
+    "login": "登入",
+    "register": "註冊"
   },
   "buttons": {
     "save": "保存",
     "cancel": "取消",
-    "delete": "删除",
-    "edit": "编辑",
-    "start": "开始",
+    "delete": "刪除",
+    "edit": "編輯",
+    "start": "開始",
     "submit": "提交",
     "next": "下一步",
     "previous": "上一步",
-    "login": "登录",
-    "signup": "注册",
-    "logout": "退出",
+    "login": "登入",
+    "signup": "註冊",
+    "logout": "登出",
     "primary": "主要",
     "secondary": "次要",
     "text": "文本",
@@ -32,113 +36,185 @@
     "large": "大",
     "action": "操作"
   },
+  "auth": {
+    "login": {
+      "title": "登入您的帳戶",
+      "subtitle": "歡迎回來！輸入您的憑證以訪問您的帳戶。",
+      "emailLabel": "電子郵件",
+      "passwordLabel": "密碼",
+      "forgotPassword": "忘記密碼？",
+      "rememberMe": "記住我",
+      "noAccount": "還沒有帳戶？",
+      "signIn": "登入",
+      "signingIn": "登入中..."
+    },
+    "register": {
+      "title": "創建新帳戶",
+      "subtitle": "加入詞彙掌握以增強您的詞彙學習體驗",
+      "usernameLabel": "用戶名",
+      "emailLabel": "電子郵件",
+      "passwordLabel": "密碼",
+      "confirmPasswordLabel": "確認密碼",
+      "nativeLanguageLabel": "母語",
+      "haveAccount": "已有帳戶？",
+      "createAccount": "創建帳戶",
+      "creating": "創建帳戶中..."
+    },
+    "forgotPassword": {
+      "title": "重設您的密碼",
+      "description": "輸入您的電子郵件地址，我們將發送重設密碼的指導說明。",
+      "emailLabel": "電子郵件",
+      "submit": "發送重設指導",
+      "sending": "發送指導中...",
+      "successMessage": "如果該電子郵件存在相關帳戶，我們已發送密碼重設指導。",
+      "backToLogin": "返回登入",
+      "rememberPassword": "記得您的密碼？"
+    }
+  },
   "home": {
     "hero": {
-      "title": "用AI掌握词汇",
-      "description": "通过个性化的AI驱动测试和分析，提升您的词汇学习。",
-      "cta": "开始使用"
+      "title": "有效地掌握新詞彙",
+      "subtitle": "透過我們的 AI 驅動的詞彙學習平台擴展您的語言能力。創建自定義列表，參加適應性測試，並追蹤您的進度。",
+      "dashboardButton": "前往儀表板",
+      "getStartedButton": "免費開始使用",
+      "loginButton": "登入",
+      "description": "通過個性化的AI驅動測試和分析，提升您的詞彙學習。",
+      "cta": "開始使用"
     },
     "features": {
-      "title": "功能特点",
+      "title": "為什麼選擇詞彙掌握？",
+      "feature1": {
+        "title": "個性化學習",
+        "description": "創建根據您的興趣、職業或學習目標量身定制的自定義詞彙列表。"
+      },
+      "feature2": {
+        "title": "進度追蹤",
+        "description": "通過詳細的統計數據和可視化，監控您隨時間的學習進程和進步。"
+      },
+      "feature3": {
+        "title": "AI 驅動測試",
+        "description": "參加適應您知識水平的測試，專注於您需要更多練習的領域。"
+      },
       "customTests": {
-        "title": "定制化测试",
-        "description": "创建并参加适合您需求的词汇测试。"
+        "title": "定製化測試",
+        "description": "創建並參加適合您需求的詞彙測試。"
       },
       "tracking": {
-        "title": "表现追踪",
-        "description": "追踪您的进度，查看您随时间的提升。"
+        "title": "表現追蹤",
+        "description": "追蹤您的進度，查看您隨時間的提升。"
       },
       "aiAnalysis": {
         "title": "AI分析",
-        "description": "根据您的表现获取个性化洞察和推荐。"
+        "description": "根據您的表現獲取個性化洞察和推薦。"
       },
       "adaptive": {
-        "title": "自适应学习",
-        "description": "测试会根据您的技能水平调整，以实现最佳学习效果。"
+        "title": "自適應學習",
+        "description": "測試會根據您的技能水平調整，以實現最佳學習效果。"
       }
+    },
+    "cta": {
+      "title": "準備擴展您的詞彙量？",
+      "description": "加入數千名使用詞彙掌握提高語言技能的學習者。",
+      "button": "現在開始學習"
     }
   },
   "dashboard": {
-    "welcome": "欢迎来到您的仪表板",
+    "welcome": "歡迎來到您的儀表板",
     "stats": {
-      "title": "您的统计",
-      "testsCompleted": "已完成测试",
-      "wordsLearned": "已学习单词",
-      "accuracy": "准确率",
-      "streak": "学习连续天数"
+      "title": "您的統計",
+      "testsCompleted": "已完成測試",
+      "wordsLearned": "已學習單詞",
+      "accuracy": "準確率",
+      "streak": "學習連續天數"
     },
     "recentTests": {
-      "title": "最近测试",
-      "noTests": "您还没有参加任何测试。",
-      "viewAll": "查看所有测试"
+      "title": "最近測試",
+      "noTests": "您還沒有參加任何測試。",
+      "viewAll": "查看所有測試"
     },
     "recommendations": {
-      "title": "为您推荐",
-      "basedOn": "基于您的表现"
+      "title": "為您推薦",
+      "basedOn": "基於您的表現"
     }
   },
   "tests": {
     "create": {
-      "title": "创建测试",
-      "nameLabel": "测试名称",
-      "typeLabel": "测试类型",
-      "difficultyLabel": "难度",
-      "wordsCountLabel": "单词数量",
-      "createButton": "创建测试"
+      "title": "創建測試",
+      "nameLabel": "測試名稱",
+      "typeLabel": "測試類型",
+      "difficultyLabel": "難度",
+      "wordsCountLabel": "單詞數量",
+      "createButton": "創建測試"
     },
     "types": {
-      "mcq": "选择题",
-      "matching": "匹配题",
-      "fillBlanks": "填空题",
-      "flashcards": "抽认卡"
+      "mcq": "選擇題",
+      "matching": "匹配題",
+      "fillBlanks": "填空題",
+      "flashcards": "抽認卡"
     },
     "difficulty": {
-      "easy": "简单",
+      "easy": "簡單",
       "medium": "中等",
-      "hard": "困难",
-      "adaptive": "自适应"
+      "hard": "困難",
+      "adaptive": "自適應"
     },
     "results": {
-      "title": "测试结果",
+      "title": "測試結果",
       "score": "您得分 {{score}} / {{total}}",
-      "accuracy": "准确率: {{accuracy}}%",
-      "timeTaken": "耗时: {{time}}",
+      "accuracy": "準確率: {{accuracy}}%",
+      "timeTaken": "耗時: {{time}}",
       "reviewButton": "查看答案",
-      "retakeButton": "重新测试"
+      "retakeButton": "重新測試"
     }
   },
   "vocabulary": {
-    "search": "搜索词汇",
-    "categories": "分类",
-    "wordList": "单词列表",
-    "noWords": "未找到单词。",
-    "addWord": "添加单词",
-    "import": "导入单词",
-    "export": "导出单词",
+    "search": "搜索詞彙",
+    "categories": "分類",
+    "wordList": "單詞列表",
+    "noWords": "未找到單詞。",
+    "addWord": "添加單詞",
+    "import": "導入單詞",
+    "export": "導出單詞",
     "wordDetails": {
-      "definition": "定义",
-      "translation": "翻译",
+      "definition": "定義",
+      "translation": "翻譯",
       "example": "例句",
-      "partOfSpeech": "词性"
+      "partOfSpeech": "詞性"
     }
   },
   "examples": {
     "showcase": {
-      "title": "词汇掌握 UI 组件",
-      "buttons": "按钮",
+      "title": "詞彙掌握 UI 組件",
+      "buttons": "按鈕",
       "cards": "卡片",
-      "inputs": "输入框",
+      "inputs": "輸入",
       "badges": "徽章",
-      "cardSmallShadow": "小阴影",
-      "cardMediumShadow": "中阴影",
-      "cardContent": "这个卡片有小阴影",
-      "badgeDefault": "默认",
+      "cardSmallShadow": "小陰影",
+      "cardMediumShadow": "中陰影",
+      "cardContent": "此卡片有小陰影",
+      "badgeDefault": "默認",
       "badgeSecondary": "次要",
       "badgeSuccess": "成功",
       "badgeWarning": "警告",
-      "badgeError": "错误",
+      "badgeError": "錯誤",
       "badgeInfo": "信息",
-      "badgeOutline": "轮廓"
+      "badgeOutline": "輪廓"
     }
+  },
+  "common": {
+    "loading": "加載中...",
+    "error": "錯誤: {{message}}"
+  },
+  "gql": {
+    "test": {
+      "title": "GraphQL 測試組件",
+      "success": "如果您能看到此訊息，則 gql 函數正常工作！"
+    }
+  },
+  "language": {
+    "switcher": "語言",
+    "select": "選擇語言",
+    "en": "英文",
+    "zh": "繁體中文"
   }
 } 

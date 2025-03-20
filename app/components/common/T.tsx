@@ -47,12 +47,23 @@ export const T = ({
   tag: Tag = 'span',
   children
 }: TProps) => {
-  const { t } = useTranslation(ns);
+  const { t, i18n } = useTranslation(ns);
   
-  // If children are provided, they serve as fallback
+  // Get translated text
+  const translatedText = t(keyName, values);
+  
+  // Log missing translations in development
+  if (import.meta.env.DEV && translatedText === keyName && i18n.exists) {
+    const exists = i18n.exists(keyName, { ns });
+    if (!exists) {
+      console.warn(`[i18n] Missing translation for key: "${keyName}" in namespace: "${ns}"`);
+    }
+  }
+  
   return (
     <Tag className={className}>
-      {t(keyName, values) || children}
+      {/* If translation returns the key itself, it's missing, so use children as fallback */}
+      {translatedText !== keyName ? translatedText : children || keyName}
     </Tag>
   );
 };
