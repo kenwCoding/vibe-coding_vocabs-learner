@@ -9,7 +9,8 @@
     "vocabulary": "词汇",
     "tests": "测试",
     "analytics": "分析",
-    "settings": "设置"
+    "settings": "设置",
+    "components": "UI 组件"
   },
   "buttons": {
     "save": "保存",
@@ -22,7 +23,14 @@
     "previous": "上一步",
     "login": "登录",
     "signup": "注册",
-    "logout": "退出"
+    "logout": "退出",
+    "primary": "主要",
+    "secondary": "次要",
+    "text": "文本",
+    "disabled": "禁用",
+    "small": "小",
+    "large": "大",
+    "action": "操作"
   },
   "home": {
     "hero": {
@@ -112,6 +120,25 @@
       "translation": "翻译",
       "example": "例句",
       "partOfSpeech": "词性"
+    }
+  },
+  "examples": {
+    "showcase": {
+      "title": "词汇掌握 UI 组件",
+      "buttons": "按钮",
+      "cards": "卡片",
+      "inputs": "输入框",
+      "badges": "徽章",
+      "cardSmallShadow": "小阴影",
+      "cardMediumShadow": "中阴影",
+      "cardContent": "这个卡片有小阴影",
+      "badgeDefault": "默认",
+      "badgeSecondary": "次要",
+      "badgeSuccess": "成功",
+      "badgeWarning": "警告",
+      "badgeError": "错误",
+      "badgeInfo": "信息",
+      "badgeOutline": "轮廓"
     }
   }
 } 
