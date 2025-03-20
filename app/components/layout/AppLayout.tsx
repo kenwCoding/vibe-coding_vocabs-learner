@@ -6,9 +6,9 @@ import Navbar from '../common/Navbar';
  */
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <Navbar />
-      <main className="flex-grow py-6">
+      <main className="flex-grow py-8">
         {children}
       </main>
     </div>

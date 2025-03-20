@@ -13,6 +13,12 @@ An intelligent platform for enhancing vocabulary learning through adaptive tests
 - 🌐 Full internationalization support (Chinese and English)
 - ♿ Accessible design for all users
 
+## Live Demo
+
+🚀 **Check out the live application**: [VocabMaster on Vercel](https://vibe-coding-vocabs-learner.vercel.app/)
+
+Experience the latest version of VocabMaster in action! The demo showcases the current UI components, authentication flow, and dashboard features.
+
 ## Tech Stack
 
 - **Frontend**: 
