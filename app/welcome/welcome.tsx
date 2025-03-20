@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { T } from "../components/common/T";
 import { Button } from "../components/ui";
 import { useUserStore } from "../store";
 
 export function Welcome() {
   const { isAuthenticated } = useUserStore();
+  const navigate = useNavigate();
   
   return (
     <div className="bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 pb-16">
@@ -28,7 +29,7 @@ export function Welcome() {
               {isAuthenticated ? (
                 <Button 
                   variant="primary" 
-                  onClick={() => window.location.href = '/dashboard'}
+                  onClick={() => navigate('/dashboard')}
                 >
                   <T keyName="home.hero.dashboardButton">Go to Dashboard</T>
                 </Button>
@@ -36,13 +37,13 @@ export function Welcome() {
                 <>
                   <Button 
                     variant="primary" 
-                    onClick={() => window.location.href = '/register'}
+                    onClick={() => navigate('/register')}
                   >
                     <T keyName="home.hero.getStartedButton">Get Started Free</T>
                   </Button>
                   <Button 
                     variant="secondary" 
-                    onClick={() => window.location.href = '/login'}
+                    onClick={() => navigate('/login')}
                   >
                     <T keyName="home.hero.loginButton">Sign In</T>
                   </Button>
@@ -146,7 +147,7 @@ export function Welcome() {
             </p>
             <Button 
               variant="secondary" 
-              onClick={() => window.location.href = isAuthenticated ? '/dashboard' : '/register'}
+              onClick={() => navigate(isAuthenticated ? '/dashboard' : '/register')}
             >
               <T keyName="home.cta.button">
                 {isAuthenticated ? 'Go to Dashboard' : 'Start Learning Now'}

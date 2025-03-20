@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import T from './T';
 import { Container } from '../ui';
 import { useUserStore } from '../../store';
+import LanguageSwitcher from './LanguageSwitcher';
 
 /**
  * Navigation bar for the VocabMaster application
@@ -69,7 +70,10 @@ export const Navbar: React.FC = () => {
             </div>
           </div>
           
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+            
             {isAuthenticated ? (
               <div className="relative">
                 <button
@@ -98,7 +102,7 @@ export const Navbar: React.FC = () => {
                       <p className="text-gray-500 dark:text-gray-400 text-xs">{user?.email}</p>
                     </div>
                     <Link
-                      to="/profile"
+                      to="/dashboard" 
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                       role="menuitem"
                       onClick={() => setUserMenuOpen(false)}
@@ -106,7 +110,7 @@ export const Navbar: React.FC = () => {
                       <T keyName="nav.profile">Your Profile</T>
                     </Link>
                     <Link
-                      to="/settings"
+                      to="/dashboard" 
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                       role="menuitem"
                       onClick={() => setUserMenuOpen(false)}

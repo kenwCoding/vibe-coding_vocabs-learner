@@ -10,7 +10,17 @@
     "tests": "Tests",
     "analytics": "Analytics",
     "settings": "Settings",
-    "components": "UI Components"
+    "components": "UI Components",
+    "profile": "Your Profile",
+    "signOut": "Sign out",
+    "login": "Sign in",
+    "register": "Register"
+  },
+  "language": {
+    "switcher": "Language",
+    "select": "Select language",
+    "en": "English",
+    "zh": "Traditional Chinese"
   },
   "buttons": {
     "save": "Save",
@@ -31,6 +41,41 @@
     "small": "Small",
     "large": "Large",
     "action": "Action"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Welcome back! Enter your credentials to access your account.",
+      "emailLabel": "Email address",
+      "passwordLabel": "Password",
+      "forgotPassword": "Forgot your password?",
+      "rememberMe": "Remember me",
+      "noAccount": "Don't have an account?",
+      "signIn": "Sign in",
+      "signingIn": "Signing in..."
+    },
+    "register": {
+      "title": "Create a new account",
+      "subtitle": "Join VocabMaster to enhance your vocabulary learning experience",
+      "usernameLabel": "Username",
+      "emailLabel": "Email address",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm password",
+      "nativeLanguageLabel": "Native language",
+      "haveAccount": "Already have an account?",
+      "createAccount": "Create account",
+      "creating": "Creating account..."
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "description": "Enter your email address and we'll send you instructions to reset your password.",
+      "emailLabel": "Email address",
+      "submit": "Send reset instructions",
+      "sending": "Sending instructions...",
+      "successMessage": "If an account exists with that email, we've sent password reset instructions.",
+      "backToLogin": "Back to login",
+      "rememberPassword": "Remember your password?"
+    }
   },
   "home": {
     "hero": {
@@ -139,6 +184,16 @@
       "badgeError": "Error",
       "badgeInfo": "Info",
       "badgeOutline": "Outline"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error: {{message}}"
+  },
+  "gql": {
+    "test": {
+      "title": "GraphQL Test Component",
+      "success": "If you can see this, the gql function is working properly!"
     }
   }
 } 

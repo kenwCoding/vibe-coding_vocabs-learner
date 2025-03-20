@@ -19,4 +19,10 @@ export { default as Container } from './Container';
 export type { ContainerProps } from './Container';
 
 export { default as Badge } from './Badge';
-export type { BadgeProps } from './Badge'; 
+export type { BadgeProps } from './Badge';
+
+export { Alert } from './Alert';
+export type { AlertProps, AlertVariant } from './Alert';
+
+export { Spinner } from './Spinner';
+export type { SpinnerProps, SpinnerSize } from './Spinner'; 
