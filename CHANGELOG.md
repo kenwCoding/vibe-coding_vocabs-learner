@@ -17,6 +17,12 @@ All notable changes to this project will be documented in this file.
 - [Enhance] - Improvements to existing features that go beyond regular updates
 - [API] - API integration, GraphQL operations, and backend communication
 
+## [0.3.5] - 2025-03-27
+### Fixed
+- [Fix] Fixed GraphQL test component to not use introspection which is disabled on the server
+- [API] Improved error handling in GraphQL queries for better user feedback
+- [Enhance] Enhanced TestGql component with better error handling and display
+
 ## [0.3.4] - 2025-03-26
 ### Added
 - [Add] Added UI components: Alert and Spinner for better user feedback
