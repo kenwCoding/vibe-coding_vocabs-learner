@@ -14,7 +14,8 @@ import {
   type LoginResponse,
   type RegisterResponse,
   type VerifyTokenResponse,
-  type RegisterUserInput
+  type RegisterUserInput,
+  type LoginInput
 } from '../services/authService';
 
 // Create the auth context with a default value
@@ -93,8 +94,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     
     try {
+      const input: LoginInput = { email, password };
       const { data } = await loginMutation({
-        variables: { email, password }
+        variables: { input }
       });
       
       if (data?.login) {
