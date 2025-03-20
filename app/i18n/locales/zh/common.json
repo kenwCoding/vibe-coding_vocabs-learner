@@ -110,6 +110,10 @@
       "adaptive": {
         "title": "自適應學習",
         "description": "測試會根據您的技能水平調整，以實現最佳學習效果。"
+      },
+      "performance": {
+        "title": "表現追蹤",
+        "description": "透過詳細的統計和見解監控您的進度。"
       }
     },
     "cta": {
@@ -119,13 +123,16 @@
     }
   },
   "dashboard": {
-    "welcome": "歡迎來到您的儀表板",
+    "welcome": "歡迎，{{username}}！",
+    "subtitle": "追蹤您的進度並提高您的詞彙技能",
     "stats": {
       "title": "您的統計",
       "testsCompleted": "已完成測試",
       "wordsLearned": "已學習單詞",
       "accuracy": "準確率",
-      "streak": "學習連續天數"
+      "streak": "學習連續天數",
+      "vocabLists": "詞彙列表",
+      "averageScore": "平均分數"
     },
     "recentTests": {
       "title": "最近測試",
@@ -135,7 +142,15 @@
     "recommendations": {
       "title": "為您推薦",
       "basedOn": "基於您的表現"
-    }
+    },
+    "recentLists": "最近詞彙列表",
+    "viewAll": "查看全部",
+    "items": "項目",
+    "noLists": "您還沒有任何詞彙列表。",
+    "createList": "創建您的第一個列表",
+    "questions": "問題",
+    "noTests": "尚無可用測試。",
+    "createTest": "創建測試"
   },
   "tests": {
     "create": {
@@ -203,7 +218,8 @@
   },
   "common": {
     "loading": "加載中...",
-    "error": "錯誤: {{message}}"
+    "error": "錯誤: {{message}}",
+    "backToDashboard": "返回儀表板"
   },
   "gql": {
     "test": {
