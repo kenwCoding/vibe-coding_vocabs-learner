@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 - [Plan] - Project planning, architecture design, or roadmap development
 - [Design] - UI/UX design, visual elements, or design system components
 
-## [0.2.0] - 2024-03-22
+## [0.2.0] - 2025-03-20
 ### Added
 - [Add] T component for internationalization with React
 - [Add] i18n configuration with English and Chinese translations
