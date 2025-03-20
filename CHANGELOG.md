@@ -24,6 +24,11 @@ All notable changes to this project will be documented in this file.
 - Implemented type definitions for User, VocabItem, VocabList, Test, and related entities
 - Added query and mutation definitions for the GraphQL API
 
+### [Fix]
+- Fixed GraphQL registration mutation by updating incorrect type references from RegisterInput to RegisterUserInput
+- Aligned client-side GraphQL operations with backend schema definitions
+- Resolved type mismatch in authentication context for user registration
+
 ## [0.3.6] - 2025-03-28
 
 ### [Fix]

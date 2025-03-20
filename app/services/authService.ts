@@ -21,7 +21,7 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const REGISTER_MUTATION = gql`
-  mutation Register($input: RegisterInput!) {
+  mutation Register($input: RegisterUserInput!) {
     register(input: $input) {
       token
       user {
@@ -66,7 +66,7 @@ export interface RegisterResponse {
   };
 }
 
-export interface RegisterInput {
+export interface RegisterUserInput {
   username: string;
   email: string;
   password: string;
