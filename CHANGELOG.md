@@ -13,6 +13,25 @@ All notable changes to this project will be documented in this file.
 - [Chore] - Changes to build process, tooling, or dependencies
 - [Plan] - Project planning, architecture design, or roadmap development
 - [Design] - UI/UX design, visual elements, or design system components
+- [Style] - Visual changes, layout adjustments, and styling improvements
+- [Enhance] - Improvements to existing features that go beyond regular updates
+
+## [0.2.1] - 2025-03-21
+### Added
+- [Add] Created placeholder vocabulary management page with "coming soon" message
+- [Add] Created placeholder tests page with "coming soon" message
+- [Add] Custom 404 page for better user experience
+
+### Fixed
+- [Fix] Card component exports in UI component library index
+- [Fix] Dashboard styling issues on desktop view
+- [Fix] Button variant type consistency in welcome page
+
+### Changed
+- [Update] Enhanced AppLayout component with better spacing and colors
+- [Update] Improved Container component with more flexible width options
+- [Design] Completely redesigned landing page with modern, attractive UI
+- [Style] Enhanced dashboard layout for better responsiveness
 
 ## [0.2.0] - 2025-03-20
 ### Added
@@ -23,6 +42,10 @@ All notable changes to this project will be documented in this file.
 - [Add] Implemented UI component library including Button, Card, Input, Container, and Badge components
 - [Add] Created component showcase for testing and development 
 - [Add] Created utility functions for Tailwind class merging
+- [Add] Zustand store implementation for user authentication, vocabulary management, and testing
+- [Add] Created login and registration pages with form validation
+- [Add] Implemented dashboard for authenticated users
+- [Add] Added user menu in navbar with authentication-aware display
 
 ### Fixed
 - [Fix] Tailwind v4 compatibility issues with utility classes
