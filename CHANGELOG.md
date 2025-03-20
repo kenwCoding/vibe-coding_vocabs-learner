@@ -33,10 +33,12 @@ All notable changes to this project will be documented in this file.
 - Updated login functionality to match server schema requirements
 - Fixed token verification process to use the correct query field
 - Fixed missing translations in the i18n system for the welcome page, dashboard page, and UI components showcase
+- Fixed i18next being initialized twice in the application, causing console warnings
 
 ### [Enhance]
 - Added missing translations for English and Traditional Chinese locales
 - Enhanced user experience by providing more comprehensive translations across the application
+- Improved i18n initialization with a condition to prevent multiple initializations
 
 ## [0.3.6] - 2025-03-28
 
