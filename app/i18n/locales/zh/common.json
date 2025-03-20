@@ -38,12 +38,28 @@
   },
   "home": {
     "hero": {
-      "title": "用AI掌握詞彙",
+      "title": "有效地掌握新詞彙",
+      "subtitle": "透過我們的 AI 驅動的詞彙學習平台擴展您的語言能力。創建自定義列表，參加適應性測試，並追蹤您的進度。",
+      "dashboardButton": "前往儀表板",
+      "getStartedButton": "免費開始使用",
+      "loginButton": "登入",
       "description": "通過個性化的AI驅動測試和分析，提升您的詞彙學習。",
       "cta": "開始使用"
     },
     "features": {
-      "title": "功能特點",
+      "title": "為什麼選擇詞彙掌握？",
+      "feature1": {
+        "title": "個性化學習",
+        "description": "創建根據您的興趣、職業或學習目標量身定制的自定義詞彙列表。"
+      },
+      "feature2": {
+        "title": "進度追蹤",
+        "description": "通過詳細的統計數據和可視化，監控您隨時間的學習進程和進步。"
+      },
+      "feature3": {
+        "title": "AI 驅動測試",
+        "description": "參加適應您知識水平的測試，專注於您需要更多練習的領域。"
+      },
       "customTests": {
         "title": "定製化測試",
         "description": "創建並參加適合您需求的詞彙測試。"
@@ -60,6 +76,11 @@
         "title": "自適應學習",
         "description": "測試會根據您的技能水平調整，以實現最佳學習效果。"
       }
+    },
+    "cta": {
+      "title": "準備擴展您的詞彙量？",
+      "description": "加入數千名使用詞彙掌握提高語言技能的學習者。",
+      "button": "現在開始學習"
     }
   },
   "dashboard": {

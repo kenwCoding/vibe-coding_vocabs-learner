@@ -17,6 +17,11 @@ All notable changes to this project will be documented in this file.
 - [Enhance] - Improvements to existing features that go beyond regular updates
 - [API] - API integration, GraphQL operations, and backend communication
 
+## [0.3.3] - 2025-03-25
+### Improved
+- [Enhance] Added missing Traditional Chinese translations for the Welcome page
+- [Update] Expanded translation coverage in zh locale files
+
 ## [0.3.2] - 2025-03-24
 ### Added
 - [Add] Added language switcher in the navbar to toggle between English and Traditional Chinese
