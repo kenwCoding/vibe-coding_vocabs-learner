@@ -17,6 +17,19 @@ All notable changes to this project will be documented in this file.
 - [Enhance] - Improvements to existing features that go beyond regular updates
 - [API] - API integration, GraphQL operations, and backend communication
 
+## [0.3.4] - 2025-03-26
+### Added
+- [Add] Added UI components: Alert and Spinner for better user feedback
+- [Add] Added services architecture for authentication and data operations
+- [Add] Added GraphQL operation definitions and utilities
+- [Add] Added browser utility functions for safe localStorage operations
+- [Add] Added TypeScript types and interfaces for improved code safety
+
+### Infrastructure
+- [Chore] Updated environment configuration for development and production
+- [Refactor] Improved project structure with clear separation of concerns
+- [API] Added GraphQL client setup and service integration
+
 ## [0.3.3] - 2025-03-25
 ### Improved
 - [Enhance] Added missing Traditional Chinese translations for the Welcome page
