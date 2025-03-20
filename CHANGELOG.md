@@ -17,19 +17,40 @@ All notable changes to this project will be documented in this file.
 - [Enhance] - Improvements to existing features that go beyond regular updates
 - [API] - API integration, GraphQL operations, and backend communication
 
+## [Unreleased]
+
 ## [0.3.6] - 2025-03-28
-### Fixed
-- [Fix] Fixed navigation in Welcome component to use React Router navigation instead of direct page loads
-- [Fix] Fixed incorrect registration link in login form (changed from "/auth/register" to "/register")
-- [Fix] Fixed incorrect forgot password link in login form (changed from "/auth/forgot-password" to "/forgot-password")
-- [Fix] Fixed incorrect login link in register form (changed from "/auth/login" to "/login")
-- [Enhance] Improved client-side routing for better user experience and proper SPA behavior
+
+### [Fix]
+- Fixed navigation in the Welcome component to use React Router navigation.
+- Fixed the incorrect registration link in the login form (changed from "/auth/register" to "/register").
+- Fixed the incorrect forgot password link in the login form (changed from "/auth/forgot-password" to "/forgot-password").
+- Fixed the incorrect login link in the register form (changed from "/auth/login" to "/login").
+- Updated non-existent profile and settings links in Navbar to temporarily redirect to the dashboard.
+- Added forgot-password route to routes configuration.
+- Improved client-side routing for better user experience.
+
+### [Add]
+- Implemented forgot password page and functionality.
+- Added translations for the forgot password page in English and Traditional Chinese.
+
+### [Enhance]
+- Enhanced error handling for GraphQL queries.
+- Added Traditional Chinese localization for the Welcome page.
 
 ## [0.3.5] - 2025-03-27
-### Fixed
-- [Fix] Fixed GraphQL test component to not use introspection which is disabled on the server
-- [API] Improved error handling in GraphQL queries for better user feedback
-- [Enhance] Enhanced TestGql component with better error handling and display
+
+### [Fix]
+- Fixed GraphQL introspection error in TestGql component.
+- Improved error handling for network issues.
+
+### [Enhance]
+- Added React Query for better data fetching.
+- Enhanced form validation on authentication forms.
+
+### [API]
+- Implemented GraphQL integration with Apollo Client.
+- Added schema validation for server responses.
 
 ## [0.3.4] - 2025-03-26
 ### Added
