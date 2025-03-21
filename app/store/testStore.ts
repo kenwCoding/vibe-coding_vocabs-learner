@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { isBrowser } from '../utils/browser';
 
 /**
  * Types of tests supported by the application
@@ -351,6 +352,7 @@ export const useTestStore = create<TestState>()(
         tests: state.tests,
         attempts: state.attempts
       }),
+      skipHydration: !isBrowser, // Skip hydration in non-browser environments
     }
   )
 ); 

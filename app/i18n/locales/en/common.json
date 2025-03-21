@@ -80,11 +80,27 @@
   "home": {
     "hero": {
       "title": "Master Vocabulary with AI",
+      "subtitle": "Expand your language skills with our AI-powered vocabulary learning platform. Create custom lists, take adaptive tests, and track your progress.",
       "description": "Enhance your vocabulary learning with personalized AI-powered tests and analysis.",
-      "cta": "Get Started"
+      "cta": "Get Started",
+      "dashboardButton": "Go to Dashboard",
+      "getStartedButton": "Get Started Free",
+      "loginButton": "Sign In"
     },
     "features": {
       "title": "Features",
+      "feature1": {
+        "title": "Personalized Learning",
+        "description": "Create custom vocabulary lists tailored to your interests, profession, or learning goals."
+      },
+      "feature2": {
+        "title": "Progress Tracking",
+        "description": "Monitor your learning journey with detailed statistics and visualizations of your improvement over time."
+      },
+      "feature3": {
+        "title": "AI-Powered Tests",
+        "description": "Take adaptive tests that adjust to your knowledge level and focus on areas where you need more practice."
+      },
       "customTests": {
         "title": "Customized Tests",
         "description": "Create and take vocabulary tests tailored to your needs."
@@ -100,17 +116,29 @@
       "adaptive": {
         "title": "Adaptive Learning",
         "description": "Tests adjust to your skill level for optimal learning."
+      },
+      "performance": {
+        "title": "Performance Tracking",
+        "description": "Monitor your progress with detailed statistics and insights."
       }
+    },
+    "cta": {
+      "title": "Ready to Expand Your Vocabulary?",
+      "description": "Join thousands of learners who have improved their language skills with VocabMaster.",
+      "button": "Start Learning Now"
     }
   },
   "dashboard": {
-    "welcome": "Welcome to your dashboard",
+    "welcome": "Welcome, {{username}}!",
+    "subtitle": "Track your progress and improve your vocabulary skills",
     "stats": {
       "title": "Your Stats",
       "testsCompleted": "Tests Completed",
       "wordsLearned": "Words Learned",
       "accuracy": "Accuracy",
-      "streak": "Learning Streak"
+      "streak": "Learning Streak",
+      "vocabLists": "Vocabulary Lists",
+      "averageScore": "Average Score"
     },
     "recentTests": {
       "title": "Recent Tests",
@@ -120,7 +148,15 @@
     "recommendations": {
       "title": "Recommended for You",
       "basedOn": "Based on your performance"
-    }
+    },
+    "recentLists": "Recent Vocabulary Lists",
+    "viewAll": "View all",
+    "items": "items",
+    "noLists": "You don't have any vocabulary lists yet.",
+    "createList": "Create your first list",
+    "questions": "questions",
+    "noTests": "No tests available yet.",
+    "createTest": "Create a test"
   },
   "tests": {
     "create": {
@@ -188,7 +224,8 @@
   },
   "common": {
     "loading": "Loading...",
-    "error": "Error: {{message}}"
+    "error": "Error: {{message}}",
+    "backToDashboard": "Back to Dashboard"
   },
   "gql": {
     "test": {

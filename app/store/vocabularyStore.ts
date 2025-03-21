@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { isBrowser } from '../utils/browser';
 
 /**
  * Represents a single vocabulary item
@@ -257,6 +258,7 @@ export const useVocabularyStore = create<VocabularyState>()(
         vocabItems: state.vocabItems,
         vocabLists: state.vocabLists
       }),
+      skipHydration: !isBrowser, // Skip hydration in non-browser environments
     }
   )
 ); 

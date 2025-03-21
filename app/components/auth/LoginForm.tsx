@@ -93,7 +93,7 @@ export function LoginForm() {
           </label>
           <div className="text-sm">
             <Link
-              to="/forgot-password"
+              to="/auth/forgot-password"
               className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
             >
               <T keyName="auth.login.forgotPassword">Forgot your password?</T>
@@ -133,7 +133,7 @@ export function LoginForm() {
         
         <div className="text-sm">
           <Link
-            to="/register"
+            to="/auth/register"
             className="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
             <T keyName="auth.login.noAccount">Don't have an account?</T>

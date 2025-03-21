@@ -3,7 +3,7 @@ import { gql } from '../lib/gql-utils';
 // Queries
 export const GET_CURRENT_USER = gql`
   query GetCurrentUser {
-    getCurrentUser {
+    me {
       id
       username
       email
@@ -19,8 +19,8 @@ export const GET_CURRENT_USER = gql`
 
 // Mutations
 export const LOGIN = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation Login($input: LoginInput!) {
+    login(input: $input) {
       token
       user {
         id

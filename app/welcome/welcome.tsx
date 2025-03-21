@@ -37,13 +37,13 @@ export function Welcome() {
                 <>
                   <Button 
                     variant="primary" 
-                    onClick={() => navigate('/register')}
+                    onClick={() => navigate('/auth/register')}
                   >
                     <T keyName="home.hero.getStartedButton">Get Started Free</T>
                   </Button>
                   <Button 
                     variant="secondary" 
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate('/auth/login')}
                   >
                     <T keyName="home.hero.loginButton">Sign In</T>
                   </Button>
@@ -147,7 +147,7 @@ export function Welcome() {
             </p>
             <Button 
               variant="secondary" 
-              onClick={() => navigate(isAuthenticated ? '/dashboard' : '/register')}
+              onClick={() => navigate(isAuthenticated ? '/dashboard' : '/auth/register')}
             >
               <T keyName="home.cta.button">
                 {isAuthenticated ? 'Go to Dashboard' : 'Start Learning Now'}
