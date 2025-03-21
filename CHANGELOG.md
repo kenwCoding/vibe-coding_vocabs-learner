@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - [Style] - Visual changes, layout adjustments, and styling improvements
 - [Enhance] - Improvements to existing features that go beyond regular updates
 - [API] - API integration, GraphQL operations, and backend communication
+- [Perf] - Performance optimizations and improvements
 
 ## [Unreleased]
 
@@ -34,11 +35,23 @@ All notable changes to this project will be documented in this file.
 - Fixed token verification process to use the correct query field
 - Fixed missing translations in the i18n system for the welcome page, dashboard page, and UI components showcase
 - Fixed i18next being initialized twice in the application, causing console warnings
+- Fixed browser throttling warning in dashboard page by optimizing performance
+- Fixed infinite loop and excessive re-renders in dashboard component
 
 ### [Enhance]
 - Added missing translations for English and Traditional Chinese locales
 - Enhanced user experience by providing more comprehensive translations across the application
 - Improved i18n initialization with a condition to prevent multiple initializations
+- Optimized dashboard page performance with memoization and deferred loading
+- Added debounced localStorage implementation for Zustand stores to prevent excessive IPC calls
+- Added loading state to the dashboard to improve perceived performance
+
+### [Perf]
+- Implemented optimized store access patterns in dashboard component using selectors
+- Restructured component rendering to avoid unnecessary calculations
+- Added error handling for localStorage operations to prevent crashes in private browsing
+- Improved store hydration process to reduce localStorage writes during initialization
+- Added additional delay before loading computationally expensive dashboard components
 
 ## [0.3.6] - 2025-03-28
 

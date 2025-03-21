@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router';
 import type { Route } from '../../+types/root';
@@ -6,6 +6,7 @@ import { T } from '../../components/common/T';
 import { Container, Card, CardHeader, CardTitle, CardContent } from '../../components/ui';
 import AppLayout from '../../components/layout/AppLayout';
 import { useUserStore, useVocabularyStore, useTestStore } from '../../store';
+import { Spinner } from '../../components/ui/Spinner';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -21,33 +22,75 @@ export function meta({}: Route.MetaArgs) {
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useUserStore();
-  const { vocabLists } = useVocabularyStore();
-  const { tests, attempts } = useTestStore();
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Access store data only when needed through selectors to minimize re-renders
+  const vocabLists = useVocabularyStore(state => state.vocabLists);
+  const tests = useTestStore(state => state.tests);
+  const attempts = useTestStore(state => state.attempts);
   
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
+    } else {
+      // Add a small delay to allow initial render to complete before doing heavy calculations
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 200); // Increased delay slightly
+      return () => clearTimeout(timer);
     }
   }, [isAuthenticated, navigate]);
+  
+  // Memoize expensive calculations - moved before the loading check
+  const memoizedData = useMemo(() => {
+    if (!user) return { recentLists: [], recentTests: [], stats: { vocabListCount: 0, completedTestCount: 0, averageScore: 0 } };
+    
+    // Get recent lists - limit to 3
+    const recentLists = Object.values(vocabLists)
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+      .slice(0, 3);
+      
+    // Get recent tests - limit to 3
+    const recentTests = Object.values(tests)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 3);
+      
+    // Calculate stats
+    const userAttempts = attempts.filter(attempt => attempt.userId === user.id);
+    const completedTests = userAttempts.filter(attempt => attempt.completedAt);
+    const averageScore = completedTests.length 
+      ? completedTests.reduce((sum, attempt) => sum + (attempt.score || 0), 0) / completedTests.length
+      : 0;
+    
+    return {
+      recentLists,
+      recentTests,
+      stats: {
+        vocabListCount: Object.keys(vocabLists).length,
+        completedTestCount: completedTests.length,
+        averageScore
+      }
+    };
+  }, [vocabLists, tests, attempts, user]); // Include user in dependencies
   
   if (!isAuthenticated || !user) {
     return null; // Will redirect via useEffect
   }
+
+  if (isLoading) {
+    return (
+      <AppLayout>
+        <Container maxWidth="lg">
+          <div className="flex justify-center items-center h-64">
+            <Spinner size="lg" />
+          </div>
+        </Container>
+      </AppLayout>
+    );
+  }
   
-  const recentLists = Object.values(vocabLists)
-    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-    .slice(0, 3);
-    
-  const recentTests = Object.values(tests)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 3);
-    
-  const userAttempts = attempts.filter(attempt => attempt.userId === user.id);
-  const completedTests = userAttempts.filter(attempt => attempt.completedAt);
-  const averageScore = completedTests.length 
-    ? completedTests.reduce((sum, attempt) => sum + (attempt.score || 0), 0) / completedTests.length
-    : 0;
+  const { recentLists, recentTests, stats } = memoizedData;
   
   return (
     <AppLayout>
@@ -79,7 +122,7 @@ export default function Dashboard() {
                   <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                     <T keyName="dashboard.stats.vocabLists">Vocabulary Lists</T>
                   </p>
-                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{Object.keys(vocabLists).length}</p>
+                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{stats.vocabListCount}</p>
                 </div>
               </div>
             </CardContent>
@@ -98,7 +141,7 @@ export default function Dashboard() {
                   <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                     <T keyName="dashboard.stats.testsCompleted">Tests Completed</T>
                   </p>
-                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{completedTests.length}</p>
+                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{stats.completedTestCount}</p>
                 </div>
               </div>
             </CardContent>
@@ -118,7 +161,7 @@ export default function Dashboard() {
                     <T keyName="dashboard.stats.averageScore">Average Score</T>
                   </p>
                   <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                    {averageScore.toFixed(1)}%
+                    {stats.averageScore.toFixed(1)}%
                   </p>
                 </div>
               </div>
