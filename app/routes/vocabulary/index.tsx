@@ -26,7 +26,7 @@ export default function Vocabulary() {
   // Redirect to login if not authenticated
   React.useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate('/auth/login');
     }
   }, [isAuthenticated, navigate]);
   

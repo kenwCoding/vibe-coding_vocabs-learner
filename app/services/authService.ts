@@ -4,8 +4,8 @@ import { safeLocalStorageGet, safeLocalStorageSet, safeLocalStorageRemove } from
 
 // Define GraphQL mutation operations
 export const LOGIN_MUTATION = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation Login($input: LoginInput!) {
+    login(input: $input) {
       token
       user {
         id
@@ -21,7 +21,7 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const REGISTER_MUTATION = gql`
-  mutation Register($input: RegisterInput!) {
+  mutation Register($input: RegisterUserInput!) {
     register(input: $input) {
       token
       user {
@@ -38,8 +38,8 @@ export const REGISTER_MUTATION = gql`
 `;
 
 export const VERIFY_TOKEN_QUERY = gql`
-  query VerifyToken {
-    verifyToken {
+  query VerifyCurrentUser {
+    me {
       id
       username
       email
@@ -66,15 +66,20 @@ export interface RegisterResponse {
   };
 }
 
-export interface RegisterInput {
+export interface RegisterUserInput {
   username: string;
   email: string;
   password: string;
   nativeLanguage: string;
 }
 
+export interface LoginInput {
+  email: string;
+  password: string;
+}
+
 export interface VerifyTokenResponse {
-  verifyToken: User | null;
+  me: User | null;
 }
 
 // Authentication utilities

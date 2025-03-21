@@ -14,7 +14,8 @@ import {
   type LoginResponse,
   type RegisterResponse,
   type VerifyTokenResponse,
-  type RegisterInput
+  type RegisterUserInput,
+  type LoginInput
 } from '../services/authService';
 
 // Create the auth context with a default value
@@ -58,8 +59,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { refetch } = useQuery<VerifyTokenResponse>(VERIFY_TOKEN_QUERY, {
     skip: !checkAuth(), // Skip if no token is available
     onCompleted: (data) => {
-      if (data?.verifyToken) {
-        setUser(data.verifyToken);
+      if (data?.me) {
+        setUser(data.me);
       } else {
         // Token is invalid, remove it
         removeToken();
@@ -93,8 +94,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     
     try {
+      const input: LoginInput = { email, password };
       const { data } = await loginMutation({
-        variables: { email, password }
+        variables: { input }
       });
       
       if (data?.login) {
@@ -115,7 +117,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     
     try {
-      const input: RegisterInput = {
+      const input: RegisterUserInput = {
         username: userData.username,
         email: userData.email,
         password: userData.password,

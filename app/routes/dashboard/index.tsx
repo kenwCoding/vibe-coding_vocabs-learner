@@ -1,226 +1,97 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router';
 import type { Route } from '../../+types/root';
 import { T } from '../../components/common/T';
-import { Container, Card, CardHeader, CardTitle, CardContent } from '../../components/ui';
+import { Container, Card } from '../../components/ui';
 import AppLayout from '../../components/layout/AppLayout';
-import { useUserStore, useVocabularyStore, useTestStore } from '../../store';
+import { useUserStore } from '../../store';
+import { Spinner } from '../../components/ui/Spinner';
+
+// Lazy load the dashboard content to reduce initial bundle size and IPC calls
+const DashboardContent = lazy(() => 
+  // Add artificial delay to ensure navigation completes before heavy content loads
+  new Promise<{ default: React.ComponentType<any> }>(resolve => 
+    setTimeout(() => 
+      import('../../components/dashboard/DashboardContent').then(module => resolve(module)),
+      500 // Half second delay
+    )
+  )
+);
 
 export function meta({}: Route.MetaArgs) {
   return [
     { title: 'Dashboard - VocabMaster' },
-    { name: 'description', content: 'Your personalized VocabMaster dashboard' },
+    { name: 'description', content: 'View your vocabulary learning progress' },
   ];
 }
 
 /**
  * Dashboard page component
- * Main hub for authenticated users
+ * Main hub for authenticated users - optimized to prevent browser throttling
  */
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useUserStore();
-  const { vocabLists } = useVocabularyStore();
-  const { tests, attempts } = useTestStore();
+  const [username, setUsername] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const isAuthenticated = useUserStore(state => state.isAuthenticated);
   
-  // Redirect to login if not authenticated
+  // Check authentication on initial render
   useEffect(() => {
+    // If not authenticated, redirect to login
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate('/auth/login');
+      return;
     }
+    
+    // Get username for the greeting
+    const user = useUserStore.getState().user;
+    if (user) {
+      setUsername(user.username || user.email.split('@')[0]);
+    }
+    
+    // Simulate a navigation delay before setting loading state
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+    
+    return () => clearTimeout(timer);
   }, [isAuthenticated, navigate]);
   
-  if (!isAuthenticated || !user) {
-    return null; // Will redirect via useEffect
+  // If not authenticated, don't render anything
+  if (!isAuthenticated) {
+    return null;
   }
-  
-  const recentLists = Object.values(vocabLists)
-    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-    .slice(0, 3);
-    
-  const recentTests = Object.values(tests)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 3);
-    
-  const userAttempts = attempts.filter(attempt => attempt.userId === user.id);
-  const completedTests = userAttempts.filter(attempt => attempt.completedAt);
-  const averageScore = completedTests.length 
-    ? completedTests.reduce((sum, attempt) => sum + (attempt.score || 0), 0) / completedTests.length
-    : 0;
   
   return (
     <AppLayout>
-      <Container maxWidth="lg">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            <T keyName="dashboard.welcome" values={{ username: user.username }}>
-              Welcome, {user.username}!
-            </T>
-          </h1>
-          <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
-            <T keyName="dashboard.subtitle">
-              Track your progress and improve your vocabulary skills
-            </T>
-          </p>
-        </header>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Stats Card 1 */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="p-3 rounded-full bg-primary-100 dark:bg-primary-900">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    <T keyName="dashboard.stats.vocabLists">Vocabulary Lists</T>
-                  </p>
-                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{Object.keys(vocabLists).length}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
-          {/* Stats Card 2 */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="p-3 rounded-full bg-green-100 dark:bg-green-900">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    <T keyName="dashboard.stats.testsCompleted">Tests Completed</T>
-                  </p>
-                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{completedTests.length}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
-          {/* Stats Card 3 */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    <T keyName="dashboard.stats.averageScore">Average Score</T>
-                  </p>
-                  <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                    {averageScore.toFixed(1)}%
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        
-        {/* Recent Vocabulary Lists */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              <T keyName="dashboard.recentLists">Recent Vocabulary Lists</T>
-            </h2>
-            <Link to="/vocabulary" className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-              <T keyName="dashboard.viewAll">View all</T>
-            </Link>
+      <Container>
+        <div className="py-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+              <T keyName="dashboard.greeting" values={{ name: username || '' }}>
+                Hello, {username}
+              </T>
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              <T keyName="dashboard.subtitle">
+                Here's an overview of your vocabulary learning progress
+              </T>
+            </p>
           </div>
           
-          {recentLists.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recentLists.map(list => (
-                <Card key={list.id}>
-                  <CardHeader>
-                    <CardTitle>{list.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{list.description}</p>
-                    <div className="flex justify-between items-center">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                        {list.level}
-                      </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {list.itemIds.length} <T keyName="dashboard.items">items</T>
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <Card>
-              <CardContent className="p-6 text-center">
-                <p className="text-gray-600 dark:text-gray-400">
-                  <T keyName="dashboard.noLists">You don't have any vocabulary lists yet.</T>
-                </p>
-                <Link to="/vocabulary/new" className="mt-2 inline-flex items-center text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                  </svg>
-                  <T keyName="dashboard.createList">Create your first list</T>
-                </Link>
-              </CardContent>
+          {isLoading ? (
+            <Card className="p-8 flex justify-center items-center min-h-[400px]">
+              <Spinner size="lg" />
             </Card>
-          )}
-        </div>
-        
-        {/* Recent Tests */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              <T keyName="dashboard.recentTests">Recent Tests</T>
-            </h2>
-            <Link to="/tests" className="text-sm font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-              <T keyName="dashboard.viewAll">View all</T>
-            </Link>
-          </div>
-          
-          {recentTests.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recentTests.map(test => (
-                <Card key={test.id}>
-                  <CardHeader>
-                    <CardTitle>{test.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{test.description}</p>
-                    <div className="flex justify-between items-center">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
-                        {test.type}
-                      </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {test.questions.length} <T keyName="dashboard.questions">questions</T>
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
           ) : (
-            <Card>
-              <CardContent className="p-6 text-center">
-                <p className="text-gray-600 dark:text-gray-400">
-                  <T keyName="dashboard.noTests">No tests available yet.</T>
-                </p>
-                <Link to="/tests/new" className="mt-2 inline-flex items-center text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                  </svg>
-                  <T keyName="dashboard.createTest">Create a test</T>
-                </Link>
-              </CardContent>
-            </Card>
+            <Suspense fallback={
+              <Card className="p-8 flex justify-center items-center min-h-[400px]">
+                <Spinner size="lg" />
+              </Card>
+            }>
+              <DashboardContent />
+            </Suspense>
           )}
         </div>
       </Container>

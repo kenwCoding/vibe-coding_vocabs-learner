@@ -86,7 +86,7 @@ export default function ForgotPassword() {
                 </Alert>
                 <div className="mt-4">
                   <Link
-                    to="/login"
+                    to="/auth/login"
                     className="text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
                   >
                     <T keyName="auth.forgotPassword.backToLogin">Back to login</T>
@@ -136,7 +136,7 @@ export default function ForgotPassword() {
 
                 <div className="text-center mt-4">
                   <Link
-                    to="/login"
+                    to="/auth/login"
                     className="text-sm text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
                   >
                     <T keyName="auth.forgotPassword.rememberPassword">Remember your password?</T>

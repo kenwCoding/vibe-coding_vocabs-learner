@@ -8,10 +8,10 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Spinner size="lg" />
@@ -21,7 +21,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   if (!isAuthenticated) {
     // Redirect to login page and preserve the intended destination
-    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+    return <Navigate to="/auth/login" state={{ from: location.pathname }} replace />;
   }
 
   return <>{children}</>;
