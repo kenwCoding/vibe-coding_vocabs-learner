@@ -26,6 +26,11 @@ All notable changes to this project will be documented in this file.
 - Added query and mutation definitions for the GraphQL API
 
 ### [Fix]
+- Fixed incorrect link references in auth components (sign in, register, and forgot password)
+- Fixed 404 error when navigating to auth pages by updating route configuration
+- Fixed browser throttling warning on dashboard page navigation
+- Fixed server-side rendering issues with localStorage access
+- Added proper error handling for localStorage operations in private browsing mode
 - Fixed GraphQL registration mutation by updating incorrect type references from RegisterInput to RegisterUserInput
 - Fixed GraphQL login mutation to use LoginInput structure instead of individual parameters
 - Fixed user authentication query to use 'me' instead of 'verifyToken'
@@ -39,6 +44,9 @@ All notable changes to this project will be documented in this file.
 - Fixed infinite loop and excessive re-renders in dashboard component
 
 ### [Enhance]
+- Added improved translations for English and Traditional Chinese
+- Optimized dashboard performance through memoization and deferred loading
+- Added loading state to improve perceived performance
 - Added missing translations for English and Traditional Chinese locales
 - Enhanced user experience by providing more comprehensive translations across the application
 - Improved i18n initialization with a condition to prevent multiple initializations
@@ -47,11 +55,19 @@ All notable changes to this project will be documented in this file.
 - Added loading state to the dashboard to improve perceived performance
 
 ### [Perf]
-- Implemented optimized store access patterns in dashboard component using selectors
-- Restructured component rendering to avoid unnecessary calculations
-- Added error handling for localStorage operations to prevent crashes in private browsing
-- Improved store hydration process to reduce localStorage writes during initialization
-- Added additional delay before loading computationally expensive dashboard components
+- Implemented lazy loading for dashboard content to reduce IPC calls during navigation
+- Created dedicated DashboardContent component to improve code organization and performance
+- Added staggered loading pattern to prevent browser throttling warnings
+- Optimized state access in dashboard component to minimize re-renders
+- Improved initial page loading sequence by deferring heavy component rendering
+- Added optimized store access patterns in the dashboard component
+- Restructured component rendering to avoid expensive calculations on every render
+- Added error handling for localStorage operations in Zustand stores
+- Improved delays for loading expensive components
+- Added server-side rendering compatibility to all Zustand stores
+- Implemented staggered data loading pattern to reduce IPC calls
+- Added lazy selectors for accessing store data only when needed
+- Improved data loading sequence to prevent browser throttling
 
 ## [0.3.6] - 2025-03-28
 
@@ -233,4 +249,92 @@ All notable changes to this project will be documented in this file.
 - [Add] Docker configuration for containerized deployment
 - [Add] Tailwind CSS integration
 - [Add] GitHub workflow configurations
-- [Add] Configuration files (tsconfig.json, vite.config.ts, etc.) 
+- [Add] Configuration files (tsconfig.json, vite.config.ts, etc.)
+
+## 0.4.0 - 2024-02-23
+
+### [Add]
+- Added GraphQL subscriptions for real-time updates
+- Added global notifications system for application events
+- Added test history and performance tracking over time
+- Added localized error messages for all application errors
+
+### [Fix]  
+- Fixed memory leaks in vocabulary list component
+- Fixed incorrect scoring in test engine
+- Fixed accessibility issues in form components
+- Fixed missing translations in the i18n system for the welcome page, dashboard page, and UI components showcase.
+
+### [Enhance]
+- Improved mobile responsiveness for main application screens
+- Enhanced keyboard navigation throughout the application
+- Optimized data loading patterns for vocabulary lists
+- Added missing translations for English and Traditional Chinese locales
+- Enhanced user experience by providing more comprehensive translations across the application
+
+## 0.3.2 - 2024-01-30
+
+### [Fix]
+- Fixed vocabulary import feature for CSV files
+- Fixed user registration validation errors
+- Fixed sorting functionality in vocabulary lists
+
+### [Enhance]
+- Improved error handling for authentication flows
+- Enhanced dark mode theme consistency
+- Added more detailed progress statistics in dashboard
+
+## 0.3.1 - 2024-01-15
+
+### [Fix]
+- Fixed critical security issue in authentication flow
+- Fixed data synchronization issues with offline mode
+- Fixed UI rendering glitches in vocabulary flashcards
+
+### [Enhance]
+- Enhanced performance for vocabulary search functionality
+- Improved loading states throughout the application
+
+## 0.3.0 - 2024-01-02
+
+### [Add]
+- Added offline mode support for vocabulary study
+- Added spaced repetition algorithm for optimized learning
+- Added detailed analytics for learning progress
+- Added bulk operations for vocabulary management
+
+### [Fix]
+- Fixed accessibility issues in UI components
+- Fixed data consistency issues in vocabulary storage
+- Fixed performance bottlenecks in test generation
+
+### [Enhance]
+- Improved user onboarding experience
+- Enhanced search functionality with filters and sorting options
+- Redesigned dashboard with more actionable insights
+
+## 0.2.0 - 2023-12-01
+
+### [Add]
+- Added test generation from vocabulary lists
+- Added user authentication and profile management
+- Added vocabulary sharing between users
+- Added multiple study modes for different learning styles
+
+### [Fix]
+- Fixed data persistence issues across sessions
+- Fixed UI inconsistencies across different devices
+- Fixed performance issues with large vocabulary sets
+
+### [Enhance]
+- Enhanced vocabulary import capabilities
+- Improved testing interface with immediate feedback
+- Added progress tracking across different vocabulary sets
+
+## 0.1.0 - 2023-11-01
+
+### [Add]
+- Initial release with basic vocabulary management
+- Added simple testing functionality
+- Added user registration and login
+- Added basic dashboard for vocabulary overview 
