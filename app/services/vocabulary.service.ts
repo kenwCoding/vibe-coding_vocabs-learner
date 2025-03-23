@@ -168,7 +168,7 @@ export class VocabularyService {
         variables: { id }
       });
       
-      return data.getVocabList;
+      return data.getVocabListById;
     } catch (error) {
       console.error('Error fetching vocabulary list:', error);
       throw error;

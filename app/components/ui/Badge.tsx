@@ -9,12 +9,32 @@ import { cva, type VariantProps } from 'class-variance-authority';
 export function normalizeLevel(level: string | undefined): 'beginner' | 'intermediate' | 'advanced' {
   if (!level) return 'beginner';
   
-  const normalizedLevel = level.toLowerCase();
+  console.log('Normalizing level:', level, typeof level);
   
-  if (normalizedLevel === 'beginner') return 'beginner';
-  if (normalizedLevel === 'intermediate') return 'intermediate';
-  if (normalizedLevel === 'advanced') return 'advanced';
+  const normalizedLevel = String(level).toLowerCase().trim();
   
+  if (normalizedLevel === 'beginner' || normalizedLevel === 'b' || normalizedLevel === 'beg') {
+    return 'beginner';
+  }
+  if (normalizedLevel === 'intermediate' || normalizedLevel === 'i' || normalizedLevel === 'int') {
+    return 'intermediate';  
+  }
+  if (normalizedLevel === 'advanced' || normalizedLevel === 'a' || normalizedLevel === 'adv') {
+    return 'advanced';
+  }
+  
+  // Handle potential numeric encodings (e.g., 1=beginner, 2=intermediate, 3=advanced)
+  if (normalizedLevel === '1' || normalizedLevel === 'easy') {
+    return 'beginner';
+  }
+  if (normalizedLevel === '2' || normalizedLevel === 'medium') {
+    return 'intermediate';  
+  }
+  if (normalizedLevel === '3' || normalizedLevel === 'hard') {
+    return 'advanced';
+  }
+  
+  console.log('Defaulting to beginner for level:', level);
   return 'beginner'; // Default to beginner if unknown level
 }
 
