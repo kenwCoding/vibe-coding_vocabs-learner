@@ -150,7 +150,6 @@ export const useUserStore = create<AuthState>()(
                 isAuthenticated: true, 
                 isLoading: false 
               });
-              console.log('Token verified and user loaded from server:', data.me);
             } else {
               // Invalid token
               safeLocalStorageRemove(AUTH_TOKEN_KEY);
@@ -159,7 +158,6 @@ export const useUserStore = create<AuthState>()(
                 isAuthenticated: false, 
                 isLoading: false 
               });
-              console.log('Token invalid, user logged out');
             }
           })
           .catch((error) => {
@@ -194,7 +192,6 @@ export const useUserStore = create<AuthState>()(
             mutation: LOGIN_MUTATION,
             variables: { input }
           });
-          console.log(data);
           
           if (data?.login) {
             const { token, user } = data.login;

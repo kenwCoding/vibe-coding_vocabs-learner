@@ -27,11 +27,9 @@ export default function DashboardContent() {
         // This avoids type conflicts while still providing real data to the dashboard
         await Promise.all([
           VocabularyService.getVocabLists().catch(err => {
-            console.error('Error fetching vocabulary lists:', err);
             return [];
           }),
           TestsService.getTests().catch(err => {
-            console.error('Error fetching tests:', err);
             return [];
           })
         ]);
@@ -39,7 +37,6 @@ export default function DashboardContent() {
         // Data loading is complete
         setIsDataLoaded(true);
       } catch (err) {
-        console.error('Error loading dashboard data:', err);
         setError('Failed to load dashboard data. Please try again later.');
       } finally {
         setIsLoading(false);

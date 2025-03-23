@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### [Fix]
+- Removed debug console statements from authentication and dashboard components
 - Removed mocked data from vocabulary and test stores to show real data state
 - Fixed user state not persisting after page refresh by enhancing token verification process
 - Fixed authentication issue in userStore using mock validation instead of backend API

@@ -86,8 +86,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         // Ensure Zustand authentication state is true
         useUserStore.setState({ isAuthenticated: true });
-        
-        console.log("Token verified, user restored:", data.me);
       } else {
         // Token is invalid, remove it
         removeToken();
@@ -99,7 +97,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(false);
     },
     onError: (error) => {
-      console.error("Token verification error:", error);
       // If the token verification fails, remove the token
       removeToken();
       setUser(null);
@@ -117,7 +114,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (isBrowser) {
         const oldToken = localStorage.getItem('vocabmaster_token');
         if (oldToken) {
-          console.log('Migrating token from old key');
           localStorage.removeItem('vocabmaster_token');
           setToken(oldToken);
         }
