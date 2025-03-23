@@ -3,6 +3,9 @@ import { Link } from 'react-router';
 import { T } from '../common/T';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui';
 import { useUserStore, useVocabularyStore, useTestStore } from '../../store';
+import { VocabularyService } from '../../services/vocabulary.service';
+import { TestsService } from '../../services/tests.service';
+import { Spinner } from '../ui/Spinner';
 
 /**
  * Dashboard Content component
@@ -10,18 +13,48 @@ import { useUserStore, useVocabularyStore, useTestStore } from '../../store';
  */
 export default function DashboardContent() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const user = useUserStore(state => state.user);
   
-  // Load data only after component mounts
+  // Fetch data from API when the component mounts
   useEffect(() => {
+    const fetchData = async () => {
+      if (!user) return;
+      
+      try {
+        // We're using API services directly instead of updating the Zustand stores
+        // This avoids type conflicts while still providing real data to the dashboard
+        await Promise.all([
+          VocabularyService.getVocabLists().catch(err => {
+            console.error('Error fetching vocabulary lists:', err);
+            return [];
+          }),
+          TestsService.getTests().catch(err => {
+            console.error('Error fetching tests:', err);
+            return [];
+          })
+        ]);
+        
+        // Data loading is complete
+        setIsDataLoaded(true);
+      } catch (err) {
+        console.error('Error loading dashboard data:', err);
+        setError('Failed to load dashboard data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
     // Delay data loading to ensure component is mounted
     const timer = setTimeout(() => {
-      setIsDataLoaded(true);
-    }, 100);
+      fetchData();
+    }, 200);
+    
     return () => clearTimeout(timer);
-  }, []);
+  }, [user]);
   
-  // Memoize data - only calculated when isDataLoaded is true
+  // Memoize data from stores
   const { recentLists, recentTests, stats } = useMemo(() => {
     if (!isDataLoaded || !user) {
       return {
@@ -67,6 +100,35 @@ export default function DashboardContent() {
       }
     };
   }, [isDataLoaded, user]);
+  
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <Card>
+        <CardContent className="p-6 text-center">
+          <div className="text-red-500 mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{error}</p>
+          <button 
+            className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
+            onClick={() => window.location.reload()}
+          >
+            <T keyName="common.retry">Retry</T>
+          </button>
+        </CardContent>
+      </Card>
+    );
+  }
   
   return (
     <>

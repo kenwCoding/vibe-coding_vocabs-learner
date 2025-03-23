@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### [Fix]
+- Removed mocked data from vocabulary and test stores to show real data state
 - Fixed user state not persisting after page refresh by enhancing token verification process
 - Fixed authentication issue in userStore using mock validation instead of backend API
 - Fixed empty content issue in vocabulary/new and tests/new routes by addressing authentication state inconsistency

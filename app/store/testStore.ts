@@ -106,52 +106,9 @@ interface TestState {
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
 /**
- * Mock data for tests
+ * Empty initial tests data
  */
-const mockTests: Record<string, Test> = {
-  't1': {
-    id: 't1',
-    title: 'Academic Vocabulary Quiz',
-    description: 'Test your knowledge of advanced academic vocabulary',
-    type: 'multipleChoice',
-    questions: [
-      {
-        id: 'q1',
-        type: 'multipleChoice',
-        vocabItemId: 'v1',
-        difficultyRating: 4,
-        prompt: 'Which of the following best defines "ubiquitous"?',
-        options: [
-          'Present, appearing, or found everywhere',
-          'Rare and unusual',
-          'Confusing or complex',
-          'Important or significant'
-        ],
-        correctOptionIndex: 0
-      },
-      {
-        id: 'q2',
-        type: 'multipleChoice',
-        vocabItemId: 'v2',
-        difficultyRating: 4,
-        prompt: 'What does "paradigm" refer to?',
-        options: [
-          'A paradox or contradiction',
-          'A typical example or pattern of something',
-          'A method of computation',
-          'An extreme situation'
-        ],
-        correctOptionIndex: 1
-      }
-    ],
-    settings: {
-      randomizeQuestions: true,
-      randomizeOptions: true,
-      showFeedbackAfterEachQuestion: true
-    },
-    createdAt: new Date().toISOString()
-  }
-};
+const initialTests: Record<string, Test> = {};
 
 /**
  * Test store for managing tests and user attempts
@@ -159,7 +116,7 @@ const mockTests: Record<string, Test> = {
 export const useTestStore = create<TestState>()(
   persist(
     (set, get) => ({
-      tests: mockTests,
+      tests: initialTests,
       currentTest: null,
       currentAttempt: null,
       attempts: [],
