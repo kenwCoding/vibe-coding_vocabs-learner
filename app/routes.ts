@@ -8,5 +8,7 @@ export default [
   route("auth/forgot-password", "routes/auth/forgot-password.tsx"),
   route("dashboard", "routes/dashboard/index.tsx"),
   route("vocabulary", "routes/vocabulary/index.tsx"),
-  route("tests", "routes/tests/index.tsx")
+  route("vocabulary/new", "routes/vocabulary/new.tsx"),
+  route("tests", "routes/tests/index.tsx"),
+  route("tests/new", "routes/tests/new.tsx")
 ] satisfies RouteConfig;
