@@ -47,8 +47,6 @@ export default function VocabularyList() {
       try {
         setIsLoading(true);
         const data = await VocabularyService.getVocabList(id);
-        console.log('Fetched vocabulary list:', data);
-        console.log('List level:', data.level);
         setList(data);
       } catch (err) {
         console.error('Error fetching vocabulary list:', err);

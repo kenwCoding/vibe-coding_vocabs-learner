@@ -38,7 +38,6 @@ export default function Vocabulary() {
       try {
         setIsLoading(true);
         const data = await VocabularyService.getVocabLists();
-        console.log('Fetched vocabulary lists:', data);
         setLists(data);
       } catch (err) {
         console.error('Error fetching vocabulary lists:', err);
@@ -50,15 +49,6 @@ export default function Vocabulary() {
     
     fetchLists();
   }, [isAuthenticated]);
-  
-  // Log vocabulary list levels for debugging
-  useEffect(() => {
-    if (lists && lists.length > 0) {
-      lists.forEach(list => {
-        console.log(`List "${list.title}" has level: ${list.level}`);
-      });
-    }
-  }, [lists]);
   
   // Redirect to login if not authenticated
   React.useEffect(() => {
@@ -156,7 +146,7 @@ export default function Vocabulary() {
                         {formatLevelForDisplay(list.level)}
                       </Badge>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
-                        {list.items.length} {t('vocabulary.items', { count: list.items.length })}
+                        {list.items?.length || 0} {t('vocabulary.items', { count: list.items?.length || 0 })}
                       </span>
                     </div>
                   </div>

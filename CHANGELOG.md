@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - Added dynamic route for viewing vocabulary lists by ID
 
 ### [Fix]
+- [Fix] 2023-05-30 17:30 - Fixed TypeError in vocabulary list view when items property is undefined
 - Removed debug console statements from authentication and dashboard components
 - Removed mocked data from vocabulary and test stores to show real data state
 - Fixed user state not persisting after page refresh by enhancing token verification process
