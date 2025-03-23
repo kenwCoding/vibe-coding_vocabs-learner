@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { BookOpen, Plus } from 'lucide-react';
 import type { Route } from '../../+types/root';
 import { T } from '../../components/common/T';
 import { Container, Card, CardHeader, CardTitle, CardContent, Button, Spinner, Badge } from '../../components/ui';
+import { getLevelVariant, formatLevelForDisplay } from '../../components/ui/Badge';
 import AppLayout from '../../components/layout/AppLayout';
 import { useUserStore } from '../../store';
 import { VocabularyService } from '../../services/vocabulary.service';
@@ -25,6 +28,7 @@ export default function Vocabulary() {
   const [lists, setLists] = useState<VocabList[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
   
   // Fetch vocabulary lists when component mounts
   useEffect(() => {
@@ -34,6 +38,7 @@ export default function Vocabulary() {
       try {
         setIsLoading(true);
         const data = await VocabularyService.getVocabLists();
+        console.log('Fetched vocabulary lists:', data);
         setLists(data);
       } catch (err) {
         console.error('Error fetching vocabulary lists:', err);
@@ -45,6 +50,15 @@ export default function Vocabulary() {
     
     fetchLists();
   }, [isAuthenticated]);
+  
+  // Log vocabulary list levels for debugging
+  useEffect(() => {
+    if (lists && lists.length > 0) {
+      lists.forEach(list => {
+        console.log(`List "${list.title}" has level: ${list.level}`);
+      });
+    }
+  }, [lists]);
   
   // Redirect to login if not authenticated
   React.useEffect(() => {
@@ -130,23 +144,29 @@ export default function Vocabulary() {
                   <CardTitle>{list.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
-                    {list.description}
-                  </p>
                   <div className="flex justify-between items-center">
-                    <Badge variant={list.level === 'beginner' ? 'success' : list.level === 'intermediate' ? 'warning' : 'error'}>
-                      {list.level}
-                    </Badge>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {list.items?.length || 0} <T keyName="vocabulary.items">items</T>
+                    <span className="block text-gray-600 dark:text-gray-400 text-sm">
+                      <span className="font-medium">{list.description}</span>
                     </span>
+                    <div className="mt-2 flex items-center space-x-2">
+                      <Badge 
+                        variant={getLevelVariant(list.level)} 
+                        className="capitalize"
+                      >
+                        {formatLevelForDisplay(list.level)}
+                      </Badge>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {list.items.length} {t('vocabulary.items', { count: list.items.length })}
+                      </span>
+                    </div>
                   </div>
-                  <div className="mt-4 flex justify-end">
+                  <div className="mt-4">
                     <Link
                       to={`/vocabulary/${list.id}`}
-                      className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 text-sm font-medium"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-primary-600 dark:text-primary-500 hover:text-primary-700 dark:hover:text-primary-400 transition-colors"
                     >
-                      <T keyName="vocabulary.viewList">View List</T> →
+                      <BookOpen className="h-4 w-4" />
+                      {t('vocabulary.viewList')}
                     </Link>
                   </div>
                 </CardContent>

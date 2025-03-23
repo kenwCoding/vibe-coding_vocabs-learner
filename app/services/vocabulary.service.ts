@@ -197,16 +197,20 @@ export class VocabularyService {
    */
   static async createVocabList(input: VocabListInput): Promise<VocabList> {
     try {
+      console.log('Creating vocabulary list with input:', input);
       const { data } = await apolloClient.mutate({
         mutation: CREATE_VOCAB_LIST,
         variables: { input },
+        // Update the cache to include the new list
         update(cache, { data: { createVocabList } }) {
           try {
+            // Read the query from the cache
             const existingListsData = cache.readQuery<VocabListsData>({
               query: GET_VOCAB_LISTS
             });
 
             if (existingListsData?.getVocabLists) {
+              // Write the new data back to the cache
               cache.writeQuery<VocabListsData>({
                 query: GET_VOCAB_LISTS,
                 data: {
@@ -223,6 +227,7 @@ export class VocabularyService {
         }
       });
       
+      console.log('API response for createVocabList:', data.createVocabList);
       return data.createVocabList;
     } catch (error) {
       console.error('Error creating vocabulary list:', error);

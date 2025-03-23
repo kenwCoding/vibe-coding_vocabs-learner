@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams, Link } from 'react-router';
 import type { Route } from '../../+types/root';
 import { T } from '../../components/common/T';
 import { 
@@ -12,10 +12,12 @@ import {
   Spinner, 
   Badge 
 } from '../../components/ui';
+import { getLevelVariant, formatLevelForDisplay } from '../../components/ui/Badge';
 import AppLayout from '../../components/layout/AppLayout';
 import { useUserStore } from '../../store';
 import { VocabularyService } from '../../services/vocabulary.service';
 import type { VocabList, VocabItem } from '../../types/graphql';
+import { ArrowLeft } from 'lucide-react';
 
 export function meta({ params }: Route.MetaArgs) {
   return [
@@ -45,6 +47,8 @@ export default function VocabularyList() {
       try {
         setIsLoading(true);
         const data = await VocabularyService.getVocabList(id);
+        console.log('Fetched vocabulary list:', data);
+        console.log('List level:', data.level);
         setList(data);
       } catch (err) {
         console.error('Error fetching vocabulary list:', err);
@@ -121,18 +125,25 @@ export default function VocabularyList() {
         ) : (
           <>
             <header className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="flex items-center mb-2">
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mr-3">
+              <div className="flex justify-between items-center mb-6">
+                <div className="flex items-center gap-4">
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                     {list.title}
                   </h1>
-                  <Badge variant={list.level === 'beginner' ? 'success' : list.level === 'intermediate' ? 'warning' : 'error'}>
-                    {list.level}
+                  <Badge 
+                    variant={getLevelVariant(list.level)}
+                    className="capitalize"
+                  >
+                    {formatLevelForDisplay(list.level)}
                   </Badge>
                 </div>
-                <p className="text-lg text-gray-600 dark:text-gray-400">
-                  {list.description}
-                </p>
+                <Link
+                  to="/vocabulary"
+                  className="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 flex items-center gap-1"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  <T keyName="common.back">Back</T>
+                </Link>
               </div>
               <div className="mt-4 md:mt-0 flex space-x-3">
                 <Button onClick={() => navigate('/vocabulary')}>

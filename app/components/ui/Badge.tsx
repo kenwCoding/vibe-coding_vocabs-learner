@@ -3,6 +3,46 @@ import { cn } from '../../utils/cn';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 /**
+ * Helper function to normalize vocabulary level values
+ * Ensures consistent level values for badge display
+ */
+export function normalizeLevel(level: string | undefined): 'beginner' | 'intermediate' | 'advanced' {
+  if (!level) return 'beginner';
+  
+  const normalizedLevel = level.toLowerCase();
+  
+  if (normalizedLevel === 'beginner') return 'beginner';
+  if (normalizedLevel === 'intermediate') return 'intermediate';
+  if (normalizedLevel === 'advanced') return 'advanced';
+  
+  return 'beginner'; // Default to beginner if unknown level
+}
+
+/**
+ * Helper function to get badge variant based on vocabulary level
+ */
+export function getLevelVariant(level: string | undefined): 'success' | 'warning' | 'error' {
+  const normalizedLevel = normalizeLevel(level);
+  
+  if (normalizedLevel === 'beginner') return 'success';
+  if (normalizedLevel === 'intermediate') return 'warning';
+  return 'error'; // Advanced or unknown
+}
+
+/**
+ * Helper function to format level for display with proper capitalization
+ */
+export function formatLevelForDisplay(level: string | undefined): string {
+  const normalizedLevel = normalizeLevel(level);
+  
+  if (normalizedLevel === 'beginner') return 'Beginner';
+  if (normalizedLevel === 'intermediate') return 'Intermediate';
+  if (normalizedLevel === 'advanced') return 'Advanced';
+  
+  return 'Unknown Level';
+}
+
+/**
  * Badge component variants using class-variance-authority for type-safe variants
  * Following the VocabMaster design system
  */

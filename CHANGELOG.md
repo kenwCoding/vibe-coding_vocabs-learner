@@ -212,41 +212,16 @@ All notable changes to this project will be documented in this file.
 - [Design] Completely redesigned landing page with modern, attractive UI
 - [Style] Enhanced dashboard layout for better responsiveness
 
-## [0.2.0] - 2025-03-20
+## [0.2.0] - 2023-05-30
 ### Added
-- [Add] T component for internationalization with React
-- [Add] i18n configuration with English and Chinese translations
-- [Add] TailwindCSS configuration with design system colors and typography
-- [Add] Component showcase page at '/showcase' route
-- [Add] Implemented UI component library including Button, Card, Input, Container, and Badge components
-- [Add] Created component showcase for testing and development 
-- [Add] Created utility functions for Tailwind class merging
-- [Add] Zustand store implementation for user authentication, vocabulary management, and testing
-- [Add] Created login and registration pages with form validation
-- [Add] Implemented dashboard for authenticated users
-- [Add] Added user menu in navbar with authentication-aware display
-
-### Fixed
-- [Fix] Tailwind v4 compatibility issues with utility classes
-- [Fix] Updated component styles to use standard Tailwind color utilities
-- [Fix] Corrected CSS structure in app.css for Tailwind v4
-- [Fix] Updated Card component to use proper HTML structure
-- [Fix] Fixed Button and Badge components to use standard color classes
-- [Fix] Fixed route configuration to correctly map to UI components showcase
-
-### Changed
-- [Update] Transformed project into "VocabMaster - AI-Powered Vocabulary Learning Platform"
-- [Update] Added new dependencies: i18next, react-i18next, zustand
-- [Update] Route change from "ui-components" to "showcase"
-- [Update] Enhanced ComponentsShowcase with better organization
-- [Update] Simplified Card component API for better usability
-- [Update] Package dependency lock files for consistent installation
-- [Update] Enhanced color configuration in tailwind.config.js with explicit color values
-
-### Other
-- [Chore] Added i18next, Zustand, and utility dependencies
-- [Docs] Updated design system in project planning
-- [Test] Verified UI components showcase route is functioning correctly
+- [Fix] 2023-05-30 16:45 - Fixed import statements in vocabulary routes to use 'react-router' instead of '@remix-run/react'
+- [Add] 2023-05-30 16:40 - Added helper function to normalize vocabulary level values for consistent display
+- [Add] 2023-05-30 16:35 - Added helper function to format level text for proper capitalization in badge displays
+- [Add] 2023-05-30 16:30 - Added function to map vocabulary levels to appropriate badge variants
+- [Add] 2023-05-30 16:20 - Implemented vocabulary list feature with real data display
+- [Add] 2023-05-30 16:10 - Added detailed view for individual vocabulary lists
+- [Add] 2023-05-30 16:00 - Created form components for enhanced user input experience
+- [Fix] 2023-05-30 15:50 - Fixed Spinner component exports for proper typing
 
 ## 2024-03-20
 - [Update] Refined tech stack with Zustand for state management, GraphQL for API, and Jest for testing

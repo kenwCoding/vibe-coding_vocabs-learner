@@ -113,9 +113,11 @@ export default function NewVocabularyList() {
       const input: VocabListInput = {
         title: formData.title,
         description: formData.description,
-        level: formData.level,
+        level: formData.level.toLowerCase() as 'beginner' | 'intermediate' | 'advanced',
         itemIds: [] // Start with empty list, items can be added later
       };
+      
+      console.log('Creating vocabulary list with level:', formData.level.toLowerCase());
       
       await VocabularyService.createVocabList(input);
       setIsSuccess(true);
