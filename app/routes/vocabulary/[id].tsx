@@ -45,24 +45,25 @@ export default function VocabularyList() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<VocabItem | null>(null);
   
+  // Fetch vocabulary list function (extracted for reuse)
+  const fetchList = async () => {
+    if (!isAuthenticated || !id) return;
+    
+    try {
+      setIsLoading(true);
+      const data = await VocabularyService.getVocabList(id);
+      console.log('Vocabulary list data:', data);
+      setList(data);
+    } catch (err) {
+      console.error('Error fetching vocabulary list:', err);
+      setError('Failed to load vocabulary list. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   // Fetch vocabulary list when component mounts
   useEffect(() => {
-    const fetchList = async () => {
-      if (!isAuthenticated || !id) return;
-      
-      try {
-        setIsLoading(true);
-        const data = await VocabularyService.getVocabList(id);
-        console.log('Raw vocabulary level from API:', data.level, typeof data.level);
-        setList(data);
-      } catch (err) {
-        console.error('Error fetching vocabulary list:', err);
-        setError('Failed to load vocabulary list. Please try again.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
     fetchList();
   }, [id, isAuthenticated]);
   
@@ -73,26 +74,23 @@ export default function VocabularyList() {
     }
   }, [isAuthenticated, navigate]);
   
-  // Handle adding a new item
-  const handleAddItem = (newItem: VocabItem) => {
-    if (list && list.items) {
-      setList({
-        ...list,
-        items: [...list.items, newItem]
-      });
-    }
+  // Handle adding a new item - refresh list after adding
+  const handleAddItem = async (newItem: VocabItem) => {
+    // Refresh the list data from the server to get the updated items
+    await fetchList();
+    
+    // Close the modal
+    setIsAddModalOpen(false);
   };
   
-  // Handle updating an item
-  const handleUpdateItem = (updatedItem: VocabItem) => {
-    if (list && list.items) {
-      setList({
-        ...list,
-        items: list.items.map(item => 
-          item.id === updatedItem.id ? updatedItem : item
-        )
-      });
-    }
+  // Handle updating an item - refresh list after updating
+  const handleUpdateItem = async (updatedItem: VocabItem) => {
+    // Refresh the list data from the server to get the updated items
+    await fetchList();
+    
+    // Reset selected item and close modal
+    setSelectedItem(null);
+    setIsEditModalOpen(false);
   };
   
   // Open edit modal for an item

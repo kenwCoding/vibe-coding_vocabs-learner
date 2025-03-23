@@ -31,16 +31,12 @@ export function EditItemModal({ isOpen, onClose, item, onItemUpdated }: EditItem
       const updatedItem = await VocabularyService.updateVocabItem(item.id, formData);
       
       if (updatedItem) {
-        // Notify parent component
+        // Notify parent component - the parent will handle refreshing and closing
         onItemUpdated(updatedItem);
-        
-        // Close the modal
-        onClose();
       }
     } catch (err) {
       console.error('Error updating vocabulary item:', err);
       setError(err instanceof Error ? err.message : 'Failed to update vocabulary item. Please try again.');
-    } finally {
       setIsSubmitting(false);
     }
   };

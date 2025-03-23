@@ -42,16 +42,12 @@ export function AddItemModal({ isOpen, onClose, vocabList, onItemAdded }: AddIte
           itemIds: itemIds
         });
         
-        // Notify parent component
+        // Notify parent component - the parent will handle refreshing and closing
         onItemAdded(newItem);
-        
-        // Close the modal
-        onClose();
       }
     } catch (err) {
       console.error('Error adding vocabulary item:', err);
       setError(err instanceof Error ? err.message : 'Failed to add vocabulary item. Please try again.');
-    } finally {
       setIsSubmitting(false);
     }
   };
