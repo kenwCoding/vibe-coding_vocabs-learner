@@ -17,7 +17,8 @@ import AppLayout from '../../components/layout/AppLayout';
 import { useUserStore } from '../../store';
 import { VocabularyService } from '../../services/vocabulary.service';
 import type { VocabList, VocabItem } from '../../types/graphql';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Plus, Pencil, Trash } from 'lucide-react';
+import { AddItemModal, EditItemModal } from '../../components/vocabulary';
 
 export function meta({ params }: Route.MetaArgs) {
   return [
@@ -38,6 +39,11 @@ export default function VocabularyList() {
   const [list, setList] = useState<VocabList | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // State for modals
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<VocabItem | null>(null);
   
   // Fetch vocabulary list when component mounts
   useEffect(() => {
@@ -66,6 +72,34 @@ export default function VocabularyList() {
       navigate('/auth/login');
     }
   }, [isAuthenticated, navigate]);
+  
+  // Handle adding a new item
+  const handleAddItem = (newItem: VocabItem) => {
+    if (list && list.items) {
+      setList({
+        ...list,
+        items: [...list.items, newItem]
+      });
+    }
+  };
+  
+  // Handle updating an item
+  const handleUpdateItem = (updatedItem: VocabItem) => {
+    if (list && list.items) {
+      setList({
+        ...list,
+        items: list.items.map(item => 
+          item.id === updatedItem.id ? updatedItem : item
+        )
+      });
+    }
+  };
+  
+  // Open edit modal for an item
+  const handleEditItem = (item: VocabItem) => {
+    setSelectedItem(item);
+    setIsEditModalOpen(true);
+  };
   
   if (!isAuthenticated || !user) {
     return null; // Will redirect via useEffect
@@ -148,10 +182,8 @@ export default function VocabularyList() {
                 <Button onClick={() => navigate('/vocabulary')}>
                   <T keyName="common.backToLists">Back to Lists</T>
                 </Button>
-                <Button variant="primary">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                  </svg>
+                <Button variant="primary" onClick={() => navigate(`/vocabulary/edit/${list.id}`)}>
+                  <Pencil className="h-4 w-4 mr-2" />
                   <T keyName="common.edit">Edit</T>
                 </Button>
               </div>
@@ -161,10 +193,8 @@ export default function VocabularyList() {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 <T keyName="vocabulary.items">Vocabulary Items</T> ({list.items?.length || 0})
               </h2>
-              <Button variant="primary" size="sm">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                </svg>
+              <Button variant="primary" size="sm" onClick={() => setIsAddModalOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
                 <T keyName="vocabulary.addItem">Add New Item</T>
               </Button>
             </div>
@@ -185,10 +215,8 @@ export default function VocabularyList() {
                       This vocabulary list doesn't have any items yet. Add your first item to get started.
                     </T>
                   </p>
-                  <Button variant="primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-                    </svg>
+                  <Button variant="primary" onClick={() => setIsAddModalOpen(true)}>
+                    <Plus className="h-4 w-4 mr-2" />
                     <T keyName="vocabulary.addFirstItem">Add Your First Item</T>
                   </Button>
                 </CardContent>
@@ -229,17 +257,50 @@ export default function VocabularyList() {
                           </h4>
                           <p className="text-gray-900 dark:text-gray-100">{item.definitionZh}</p>
                         </div>
-                        <div>
+                        <div className="mb-4">
                           <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                             <T keyName="vocabulary.example">Example</T>
                           </h4>
                           <p className="text-gray-900 dark:text-gray-100 italic">{item.exampleSentence}</p>
+                        </div>
+                        <div className="flex justify-end mt-4 space-x-2">
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            onClick={() => handleEditItem(item)}
+                          >
+                            <Pencil className="h-4 w-4 mr-1" />
+                            <T keyName="common.edit">Edit</T>
+                          </Button>
                         </div>
                       </div>
                     </div>
                   </Card>
                 ))}
               </div>
+            )}
+            
+            {/* Add Item Modal */}
+            {list && (
+              <AddItemModal
+                isOpen={isAddModalOpen}
+                onClose={() => setIsAddModalOpen(false)}
+                vocabList={list}
+                onItemAdded={handleAddItem}
+              />
+            )}
+            
+            {/* Edit Item Modal */}
+            {selectedItem && (
+              <EditItemModal
+                isOpen={isEditModalOpen}
+                onClose={() => {
+                  setIsEditModalOpen(false);
+                  setSelectedItem(null);
+                }}
+                item={selectedItem}
+                onItemUpdated={handleUpdateItem}
+              />
             )}
           </>
         )}

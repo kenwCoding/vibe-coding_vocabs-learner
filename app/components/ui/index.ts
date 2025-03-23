@@ -27,6 +27,9 @@ export type { AlertProps, AlertVariant } from './Alert';
 export { Spinner } from './Spinner';
 export type { SpinnerProps, SpinnerSize } from './Spinner';
 
+export { default as Modal } from './Modal';
+export type { ModalProps } from './Modal';
+
 // Form components
 export { default as FormGroup } from './FormGroup';
 export type { FormGroupProps } from './FormGroup';

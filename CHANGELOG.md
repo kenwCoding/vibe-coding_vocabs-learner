@@ -25,6 +25,11 @@ All notable changes to this project will be documented in this file.
 - Added real vocabulary list display on the vocabulary index page fetching data from API
 - Added detailed view for individual vocabulary lists with items display
 - Added dynamic route for viewing vocabulary lists by ID
+- Added Modal component for displaying dialogs and forms
+- Added VocabItemForm component for adding and editing vocabulary items
+- Added AddItemModal and EditItemModal components for vocabulary item management
+- Added functionality to add new vocabulary items to a vocabulary list
+- Added functionality to edit existing vocabulary items within a list
 
 ### [Fix]
 - [Fix] 2023-05-30 17:30 - Fixed TypeError in vocabulary list view when items property is undefined
@@ -77,6 +82,7 @@ All notable changes to this project will be documented in this file.
 - Added debounced localStorage implementation for Zustand stores to prevent excessive IPC calls
 - Added loading state to the dashboard to improve perceived performance
 - Enhanced vocabulary list UI with proper error handling, loading states, and empty state handling
+- Improved vocabulary management with modal-based forms for adding and editing items
 
 ### [Perf]
 - Implemented lazy loading for dashboard content to reduce IPC calls during navigation
