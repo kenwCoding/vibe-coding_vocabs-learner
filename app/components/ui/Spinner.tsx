@@ -1,9 +1,9 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
 
-type SpinnerSize = 'sm' | 'md' | 'lg';
+export type SpinnerSize = 'sm' | 'md' | 'lg';
 
-interface SpinnerProps {
+export interface SpinnerProps {
   size?: SpinnerSize;
   className?: string;
 }
