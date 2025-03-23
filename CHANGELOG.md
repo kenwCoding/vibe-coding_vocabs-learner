@@ -20,6 +20,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### [Add]
+- Added "coming soon" pages for /vocabulary/new and /tests/new routes
+- Added real vocabulary list display on the vocabulary index page fetching data from API
+- Added detailed view for individual vocabulary lists with items display
+- Added dynamic route for viewing vocabulary lists by ID
+
 ### [Fix]
 - Removed debug console statements from authentication and dashboard components
 - Removed mocked data from vocabulary and test stores to show real data state
@@ -52,9 +58,7 @@ All notable changes to this project will be documented in this file.
 - Fixed i18next being initialized twice in the application, causing console warnings
 - Fixed browser throttling warning in dashboard page by optimizing performance
 - Fixed infinite loop and excessive re-renders in dashboard component
-
-### [Add]
-- Added "coming soon" pages for /vocabulary/new and /tests/new routes
+- Fixed Badge component variant in vocabulary pages to use 'error' instead of 'danger' for advanced difficulty
 
 ### [API]
 - Added GraphQL schema definition files for backend API
@@ -71,6 +75,7 @@ All notable changes to this project will be documented in this file.
 - Optimized dashboard page performance with memoization and deferred loading
 - Added debounced localStorage implementation for Zustand stores to prevent excessive IPC calls
 - Added loading state to the dashboard to improve perceived performance
+- Enhanced vocabulary list UI with proper error handling, loading states, and empty state handling
 
 ### [Perf]
 - Implemented lazy loading for dashboard content to reduce IPC calls during navigation

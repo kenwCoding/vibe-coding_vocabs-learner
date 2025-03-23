@@ -9,6 +9,7 @@ export default [
   route("dashboard", "routes/dashboard/index.tsx"),
   route("vocabulary", "routes/vocabulary/index.tsx"),
   route("vocabulary/new", "routes/vocabulary/new.tsx"),
+  route("vocabulary/:id", "routes/vocabulary/[id].tsx"),
   route("tests", "routes/tests/index.tsx"),
   route("tests/new", "routes/tests/new.tsx")
 ] satisfies RouteConfig;
