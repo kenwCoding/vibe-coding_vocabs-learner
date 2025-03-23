@@ -25,14 +25,54 @@ export default function DashboardContent() {
       try {
         // We're using API services directly instead of updating the Zustand stores
         // This avoids type conflicts while still providing real data to the dashboard
-        await Promise.all([
+        const [vocabLists, tests] = await Promise.all([
           VocabularyService.getVocabLists().catch(err => {
+            console.error('Error fetching vocabulary lists:', err);
             return [];
           }),
           TestsService.getTests().catch(err => {
+            console.error('Error fetching tests:', err);
             return [];
           })
         ]);
+
+        // Update Zustand stores with the fetched data
+        if (vocabLists && vocabLists.length > 0) {
+          const vocabStore = useVocabularyStore.getState();
+          const vocabListsMap: Record<string, any> = {};
+          const vocabItemsMap: Record<string, any> = {};
+          
+          // Process lists and items
+          vocabLists.forEach(list => {
+            vocabListsMap[list.id] = {
+              ...list,
+              itemIds: list.items?.map(item => item.id) || []
+            };
+            
+            // Process items if they exist
+            if (list.items && list.items.length > 0) {
+              list.items.forEach(item => {
+                vocabItemsMap[item.id] = item;
+              });
+            }
+          });
+          
+          // Update the stores
+          vocabStore.vocabLists = vocabListsMap;
+          vocabStore.vocabItems = vocabItemsMap;
+        }
+        
+        // Update test store if there are tests
+        if (tests && tests.length > 0) {
+          const testStore = useTestStore.getState();
+          const testsMap: Record<string, any> = {};
+          
+          tests.forEach(test => {
+            testsMap[test.id] = test;
+          });
+          
+          testStore.tests = testsMap;
+        }
         
         // Data loading is complete
         setIsDataLoaded(true);

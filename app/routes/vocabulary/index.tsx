@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import type { Route } from '../../+types/root';
 import { T } from '../../components/common/T';
 import { Container, Card, CardHeader, CardTitle, CardContent, Button, Spinner, Badge } from '../../components/ui';
