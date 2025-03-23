@@ -21,6 +21,14 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### [Fix]
+- Fixed user state not persisting after page refresh by enhancing token verification process
+- Fixed authentication issue in userStore using mock validation instead of backend API
+- Fixed empty content issue in vocabulary/new and tests/new routes by addressing authentication state inconsistency
+- Fixed synchronization between AuthContext and userStore during login/register operations
+- Fixed 404 errors for /vocabulary/new and /tests/new routes by adding missing route components
+- Fixed import errors in new route components causing empty pages
+- Fixed Button component import in route files to use consistent pattern
+- Fixed React Router import syntax for consistent navigation handling
 - Fixed authentication bug causing infinite redirects between login and dashboard pages after login
 - Fixed inconsistent localStorage key usage between AuthContext and UserStore
 - Fixed token verification process by standardizing authentication token storage
@@ -42,6 +50,9 @@ All notable changes to this project will be documented in this file.
 - Fixed i18next being initialized twice in the application, causing console warnings
 - Fixed browser throttling warning in dashboard page by optimizing performance
 - Fixed infinite loop and excessive re-renders in dashboard component
+
+### [Add]
+- Added "coming soon" pages for /vocabulary/new and /tests/new routes
 
 ### [API]
 - Added GraphQL schema definition files for backend API

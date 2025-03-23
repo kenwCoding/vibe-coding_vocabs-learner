@@ -70,17 +70,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     skip: !checkAuth(), // Skip if no token is available
     onCompleted: (data) => {
       if (data?.me) {
+        // When token is verified, update AuthContext state
         setUser(data.me);
+        
+        // Ensure Zustand store is also updated with the verified user data
+        const nativeLanguage = data.me.nativeLanguage === 'en' || data.me.nativeLanguage === 'zh' 
+          ? data.me.nativeLanguage 
+          : 'en' as const;
+        
+        // Update Zustand user state
+        zustandSetUser({
+          ...data.me,
+          nativeLanguage
+        } as any);
+        
+        // Ensure Zustand authentication state is true
+        useUserStore.setState({ isAuthenticated: true });
+        
+        console.log("Token verified, user restored:", data.me);
       } else {
         // Token is invalid, remove it
         removeToken();
+        setUser(null);
+        
+        // Also clear Zustand store
+        zustandLogout();
       }
       setIsLoading(false);
     },
-    onError: () => {
+    onError: (error) => {
+      console.error("Token verification error:", error);
       // If the token verification fails, remove the token
       removeToken();
       setUser(null);
+      
+      // Also clear Zustand store
+      zustandLogout();
+      
       setIsLoading(false);
     }
   });
@@ -154,10 +180,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setToken(data.login.token);
         setUser(data.login.user);
         
-        // Synchronize with Zustand store
-        await zustandLogin(email, password).catch(err => {
-          console.error('Failed to sync with Zustand store:', err);
-        });
+        // Update Zustand store with the user data from the response
+        zustandSetUser(data.login.user as any);
+        
+        // Set Zustand authenticated state
+        useUserStore.setState({ isAuthenticated: true });
       }
     } catch (err) {
       // Error is handled in onError
@@ -187,6 +214,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (data?.register) {
         setToken(data.register.token);
         setUser(data.register.user);
+        
+        // Update Zustand store with the user data from the response
+        zustandSetUser(data.register.user as any);
+        
+        // Set Zustand authenticated state
+        useUserStore.setState({ isAuthenticated: true });
       }
     } catch (err) {
       // Error is handled in onError

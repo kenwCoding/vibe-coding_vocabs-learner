@@ -1,9 +1,15 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { isBrowser, safeLocalStorageGet } from '../utils/browser';
-
-// Define the token key to match the authService
-const AUTH_TOKEN_KEY = 'auth_token';
+import { isBrowser, safeLocalStorageGet, safeLocalStorageSet, safeLocalStorageRemove } from '../utils/browser';
+import { apolloClient } from '../lib/apollo';
+import { 
+  LOGIN_MUTATION, 
+  REGISTER_MUTATION, 
+  TOKEN_KEY as AUTH_TOKEN_KEY,
+  type LoginInput,
+  type RegisterUserInput,
+  VERIFY_TOKEN_QUERY
+} from '../services/authService';
 
 /**
  * User interface representing a registered user
@@ -124,86 +130,125 @@ export const useUserStore = create<AuthState>()(
       // Check for token on initialization
       checkAuthentication: () => {
         const hasToken = !!safeLocalStorageGet(AUTH_TOKEN_KEY);
-        if (hasToken !== get().isAuthenticated) {
-          set({ isAuthenticated: hasToken });
+        if (hasToken) {
+          // We have a token, but we need to validate it with the server
+          // Set authenticated state based on token presence temporarily
+          if (!get().isAuthenticated) {
+            set({ isAuthenticated: true, isLoading: true });
+          }
+          
+          // Verify the token against the backend
+          apolloClient.query({
+            query: VERIFY_TOKEN_QUERY,
+            fetchPolicy: 'network-only' // Force fresh check from server, not cache
+          })
+          .then(({ data }) => {
+            if (data?.me) {
+              // Valid token, update user data
+              set({ 
+                user: data.me, 
+                isAuthenticated: true, 
+                isLoading: false 
+              });
+              console.log('Token verified and user loaded from server:', data.me);
+            } else {
+              // Invalid token
+              safeLocalStorageRemove(AUTH_TOKEN_KEY);
+              set({ 
+                user: null, 
+                isAuthenticated: false, 
+                isLoading: false 
+              });
+              console.log('Token invalid, user logged out');
+            }
+          })
+          .catch((error) => {
+            console.error('Token verification error:', error);
+            // Error verifying token, clear it
+            safeLocalStorageRemove(AUTH_TOKEN_KEY);
+            set({ 
+              user: null, 
+              isAuthenticated: false, 
+              isLoading: false,
+              error: 'Session expired. Please log in again.'
+            });
+          });
+        } else {
+          // No token, ensure we're not authenticated
+          if (get().isAuthenticated) {
+            set({ 
+              user: null, 
+              isAuthenticated: false 
+            });
+          }
         }
       },
 
-      // Mock implementation - would connect to backend in production
+      // Real implementation - connects to backend GraphQL API
       login: async (email: string, password: string) => {
         try {
           set({ isLoading: true, error: null });
           
-          // Simulate API call
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          const input: LoginInput = { email, password };
+          const { data } = await apolloClient.mutate({
+            mutation: LOGIN_MUTATION,
+            variables: { input }
+          });
+          console.log(data);
           
-          // Mock successful login
-          if (email === 'demo@example.com' && password === 'password') {
-            const mockUser: User = {
-              id: '1',
-              username: 'demo_user',
-              email: 'demo@example.com',
-              nativeLanguage: 'en',
-              preferences: {
-                darkMode: false,
-              },
-            };
+          if (data?.login) {
+            const { token, user } = data.login;
+            
+            
+            // Store token and update state
+            safeLocalStorageSet(AUTH_TOKEN_KEY, token);
             
             set({ 
-              user: mockUser, 
+              user: user, 
               isAuthenticated: true, 
               isLoading: false 
             });
-            
-            // In a real implementation, we would store token here
-            if (isBrowser) {
-              // Store a mock token to simulate authentication
-              localStorage.setItem(AUTH_TOKEN_KEY, 'mock_token_value');
-            }
-          } else {
-            throw new Error('Invalid credentials');
           }
         } catch (error) {
           set({ 
-            error: error instanceof Error ? error.message : 'An error occurred', 
+            error: error instanceof Error ? error.message : 'Login failed. Please check your credentials.', 
             isLoading: false 
           });
         }
       },
 
-      // Mock implementation - would connect to backend in production
+      // Real implementation - connects to backend GraphQL API
       register: async (username: string, email: string, password: string, nativeLanguage: 'en' | 'zh') => {
         try {
           set({ isLoading: true, error: null });
           
-          // Simulate API call
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          
-          // Mock successful registration
-          const mockUser: User = {
-            id: '2',
+          const input: RegisterUserInput = {
             username,
             email,
-            nativeLanguage,
-            preferences: {
-              darkMode: false,
-            },
+            password,
+            nativeLanguage
           };
           
-          set({ 
-            user: mockUser, 
-            isAuthenticated: true, 
-            isLoading: false 
+          const { data } = await apolloClient.mutate({
+            mutation: REGISTER_MUTATION,
+            variables: { input }
           });
           
-          // In a real implementation, we would store token here
-          if (isBrowser) {
-            // Store a mock token to simulate authentication
-            localStorage.setItem(AUTH_TOKEN_KEY, 'mock_token_value');
+          if (data?.register) {
+            const { token, user } = data.register;
+            
+            // Store token and update state
+            safeLocalStorageSet(AUTH_TOKEN_KEY, token);
+            
+            set({ 
+              user: user, 
+              isAuthenticated: true, 
+              isLoading: false 
+            });
           }
         } catch (error) {
           set({ 
-            error: error instanceof Error ? error.message : 'An error occurred', 
+            error: error instanceof Error ? error.message : 'Registration failed. Please try again.', 
             isLoading: false 
           });
         }
@@ -216,9 +261,12 @@ export const useUserStore = create<AuthState>()(
         });
         
         // Clear token from localStorage
-        if (isBrowser) {
-          localStorage.removeItem(AUTH_TOKEN_KEY);
-        }
+        safeLocalStorageRemove(AUTH_TOKEN_KEY);
+        
+        // Clear Apollo cache
+        apolloClient.resetStore().catch(error => {
+          console.error('Error clearing Apollo cache:', error);
+        });
       },
 
       updateUser: (userData) => {
