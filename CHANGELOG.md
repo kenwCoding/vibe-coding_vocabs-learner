@@ -20,12 +20,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### [API]
-- Added GraphQL schema definition files for backend API
-- Implemented type definitions for User, VocabItem, VocabList, Test, and related entities
-- Added query and mutation definitions for the GraphQL API
-
 ### [Fix]
+- Fixed authentication bug causing infinite redirects between login and dashboard pages after login
+- Fixed inconsistent localStorage key usage between AuthContext and UserStore
+- Fixed token verification process by standardizing authentication token storage
+- Added token migration mechanism to preserve existing user sessions
+- Added synchronization between Zustand store and AuthContext for consistent authentication state
 - Fixed incorrect link references in auth components (sign in, register, and forgot password)
 - Fixed 404 error when navigating to auth pages by updating route configuration
 - Fixed browser throttling warning on dashboard page navigation
@@ -42,6 +42,11 @@ All notable changes to this project will be documented in this file.
 - Fixed i18next being initialized twice in the application, causing console warnings
 - Fixed browser throttling warning in dashboard page by optimizing performance
 - Fixed infinite loop and excessive re-renders in dashboard component
+
+### [API]
+- Added GraphQL schema definition files for backend API
+- Implemented type definitions for User, VocabItem, VocabList, Test, and related entities
+- Added query and mutation definitions for the GraphQL API
 
 ### [Enhance]
 - Added improved translations for English and Traditional Chinese

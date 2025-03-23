@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { isBrowser } from '../utils/browser';
+import { isBrowser, safeLocalStorageGet } from '../utils/browser';
+
+// Define the token key to match the authService
+const AUTH_TOKEN_KEY = 'auth_token';
 
 /**
  * User interface representing a registered user
@@ -31,6 +34,7 @@ interface AuthState {
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
   clearError: () => void;
+  checkAuthentication: () => void;
 }
 
 /**
@@ -111,11 +115,19 @@ const debouncedStorage = (() => {
  */
 export const useUserStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
       isLoading: false,
       error: null,
+
+      // Check for token on initialization
+      checkAuthentication: () => {
+        const hasToken = !!safeLocalStorageGet(AUTH_TOKEN_KEY);
+        if (hasToken !== get().isAuthenticated) {
+          set({ isAuthenticated: hasToken });
+        }
+      },
 
       // Mock implementation - would connect to backend in production
       login: async (email: string, password: string) => {
@@ -142,6 +154,12 @@ export const useUserStore = create<AuthState>()(
               isAuthenticated: true, 
               isLoading: false 
             });
+            
+            // In a real implementation, we would store token here
+            if (isBrowser) {
+              // Store a mock token to simulate authentication
+              localStorage.setItem(AUTH_TOKEN_KEY, 'mock_token_value');
+            }
           } else {
             throw new Error('Invalid credentials');
           }
@@ -177,6 +195,12 @@ export const useUserStore = create<AuthState>()(
             isAuthenticated: true, 
             isLoading: false 
           });
+          
+          // In a real implementation, we would store token here
+          if (isBrowser) {
+            // Store a mock token to simulate authentication
+            localStorage.setItem(AUTH_TOKEN_KEY, 'mock_token_value');
+          }
         } catch (error) {
           set({ 
             error: error instanceof Error ? error.message : 'An error occurred', 
@@ -190,6 +214,11 @@ export const useUserStore = create<AuthState>()(
           user: null, 
           isAuthenticated: false 
         });
+        
+        // Clear token from localStorage
+        if (isBrowser) {
+          localStorage.removeItem(AUTH_TOKEN_KEY);
+        }
       },
 
       updateUser: (userData) => {

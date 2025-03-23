@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client/react/hooks';
 import { useApolloClient } from '@apollo/client/react/hooks/useApolloClient';
 import type { User, AuthContextType, RegisterData } from '../+types/user';
+import { safeLocalStorageGet, safeLocalStorageSet, safeLocalStorageRemove, isBrowser } from '../utils/browser';
+import { useUserStore } from '../store';
 import {
   LOGIN_MUTATION,
   REGISTER_MUTATION,
@@ -38,6 +40,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const client = useApolloClient();
+  
+  // Zustand user store access
+  const zustandUser = useUserStore(state => state.user);
+  const zustandIsAuthenticated = useUserStore(state => state.isAuthenticated);
+  const zustandSetUser = useUserStore(state => state.updateUser);
+  const zustandLogin = useUserStore(state => state.login);
+  const zustandLogout = useUserStore(state => state.logout);
+  const zustandCheckAuth = useUserStore(state => state.checkAuthentication);
 
   // Login mutation
   const [loginMutation] = useMutation<LoginResponse>(LOGIN_MUTATION, {
@@ -75,6 +85,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   });
 
+  // Migrate from old token key if needed
+  useEffect(() => {
+    const migrateTokenIfNeeded = () => {
+      if (isBrowser) {
+        const oldToken = localStorage.getItem('vocabmaster_token');
+        if (oldToken) {
+          console.log('Migrating token from old key');
+          localStorage.removeItem('vocabmaster_token');
+          setToken(oldToken);
+        }
+      }
+    };
+
+    migrateTokenIfNeeded();
+  }, []);
+
+  // Synchronize AuthContext with Zustand store
+  useEffect(() => {
+    // If Zustand has a user but AuthContext doesn't, use Zustand's data
+    if (zustandIsAuthenticated && zustandUser && !user) {
+      setUser(zustandUser as unknown as User);
+    }
+    // If AuthContext has a user but Zustand doesn't, update Zustand
+    else if (!zustandIsAuthenticated && user) {
+      // Cast to compatible type for Zustand
+      const nativeLanguage = user.nativeLanguage === 'en' || user.nativeLanguage === 'zh' 
+        ? user.nativeLanguage 
+        : 'en' as const; // Use const assertion
+        
+      zustandSetUser({
+        ...user,
+        nativeLanguage
+      } as any); // Use any to bypass the type check
+    }
+  }, [user, zustandUser, zustandIsAuthenticated, zustandSetUser]);
+
   // Check authentication on mount
   useEffect(() => {
     if (checkAuth()) {
@@ -87,6 +133,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(false);
     }
   }, [refetch]);
+
+  // Check Zustand auth state on mount
+  useEffect(() => {
+    zustandCheckAuth();
+  }, [zustandCheckAuth]);
 
   // Login function
   const login = async (email: string, password: string): Promise<void> => {
@@ -102,6 +153,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (data?.login) {
         setToken(data.login.token);
         setUser(data.login.user);
+        
+        // Synchronize with Zustand store
+        await zustandLogin(email, password).catch(err => {
+          console.error('Failed to sync with Zustand store:', err);
+        });
       }
     } catch (err) {
       // Error is handled in onError
@@ -144,6 +200,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = (): void => {
     removeToken();
     setUser(null);
+    
+    // Synchronize with Zustand store
+    zustandLogout();
     
     // Clear the Apollo cache to remove any user-specific data
     client.resetStore().catch(error => {
