@@ -65,6 +65,7 @@ All notable changes to this project will be documented in this file.
 - Fixed browser throttling warning in dashboard page by optimizing performance
 - Fixed infinite loop and excessive re-renders in dashboard component
 - Fixed Badge component variant in vocabulary pages to use 'error' instead of 'danger' for advanced difficulty
+- [Fix] 2023-05-31 15:30 - Fixed GraphQL mutation error when adding new vocabulary items to a list by properly formatting the input data
 
 ### [API]
 - Added GraphQL schema definition files for backend API

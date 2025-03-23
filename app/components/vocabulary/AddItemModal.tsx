@@ -32,9 +32,14 @@ export function AddItemModal({ isOpen, onClose, vocabList, onItemAdded }: AddIte
       
       // Then update the vocabulary list to include the new item
       if (newItem && newItem.id) {
+        // Extract only the relevant fields required by VocabListInput
+        const itemIds = [...(vocabList.items?.map(item => item.id) || []), newItem.id];
+        
         await VocabularyService.updateVocabList(vocabList.id, {
-          ...vocabList,
-          itemIds: [...(vocabList.items?.map(item => item.id) || []), newItem.id]
+          title: vocabList.title,
+          description: vocabList.description,
+          level: vocabList.level,
+          itemIds: itemIds
         });
         
         // Notify parent component
