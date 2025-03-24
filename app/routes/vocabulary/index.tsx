@@ -1,12 +1,15 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { BookOpen, Plus } from 'lucide-react';
 import type { Route } from '../../+types/root';
 import { T } from '../../components/common/T';
-import { Container, Card, CardHeader, CardTitle, CardContent } from '../../components/ui';
+import { Container, Card, CardHeader, CardTitle, CardContent, Button, Spinner, Badge } from '../../components/ui';
+import { getLevelVariant, formatLevelForDisplay } from '../../components/ui/Badge';
 import AppLayout from '../../components/layout/AppLayout';
 import { useUserStore } from '../../store';
-import Button from '../../components/ui/Button';
+import { VocabularyService } from '../../services/vocabulary.service';
+import type { VocabList } from '../../types/graphql';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -22,6 +25,30 @@ export function meta({}: Route.MetaArgs) {
 export default function Vocabulary() {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useUserStore();
+  const [lists, setLists] = useState<VocabList[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
+  
+  // Fetch vocabulary lists when component mounts
+  useEffect(() => {
+    const fetchLists = async () => {
+      if (!isAuthenticated) return;
+      
+      try {
+        setIsLoading(true);
+        const data = await VocabularyService.getVocabLists();
+        setLists(data);
+      } catch (err) {
+        console.error('Error fetching vocabulary lists:', err);
+        setError('Failed to load vocabulary lists. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchLists();
+  }, [isAuthenticated]);
   
   // Redirect to login if not authenticated
   React.useEffect(() => {
@@ -57,26 +84,86 @@ export default function Vocabulary() {
           </Button>
         </div>
         
-        <Card>
-          <CardContent className="p-12 text-center">
-            <div className="mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
-              <T keyName="vocabulary.comingSoon">Vocabulary Management Coming Soon</T>
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
-              <T keyName="vocabulary.comingSoonMessage">
-                We're working on bringing you powerful vocabulary management tools. Check back soon!
-              </T>
-            </p>
-            <Button onClick={() => navigate('/dashboard')}>
-              <T keyName="common.backToDashboard">Back to Dashboard</T>
-            </Button>
-          </CardContent>
-        </Card>
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <Spinner size="lg" />
+          </div>
+        ) : error ? (
+          <Card>
+            <CardContent className="p-6 text-center">
+              <div className="text-red-500 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                <T keyName="common.error">Error</T>
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
+              <Button onClick={() => window.location.reload()}>
+                <T keyName="common.retry">Retry</T>
+              </Button>
+            </CardContent>
+          </Card>
+        ) : lists.length === 0 ? (
+          <Card>
+            <CardContent className="p-12 text-center">
+              <div className="mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                <T keyName="vocabulary.noLists">No Vocabulary Lists Yet</T>
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                <T keyName="vocabulary.createFirstList">
+                  You don't have any vocabulary lists yet. Create your first list to get started.
+                </T>
+              </p>
+              <Button onClick={() => navigate('/vocabulary/new')}>
+                <T keyName="vocabulary.createFirst">Create Your First List</T>
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {lists.map((list) => (
+              <Card key={list.id} className="hover:shadow-md transition-shadow duration-200">
+                <CardHeader>
+                  <CardTitle>{list.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-between items-center">
+                    <span className="block text-gray-600 dark:text-gray-400 text-sm">
+                      <span className="font-medium">{list.description}</span>
+                    </span>
+                    <div className="mt-2 flex items-center space-x-2">
+                      <Badge 
+                        variant={getLevelVariant(list.level)} 
+                        className="capitalize"
+                      >
+                        {formatLevelForDisplay(list.level)}
+                      </Badge>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {list.items?.length || 0} {t('vocabulary.items', { count: list.items?.length || 0 })}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <Link
+                      to={`/vocabulary/${list.id}`}
+                      className="inline-flex items-center gap-1 text-sm font-medium text-primary-600 dark:text-primary-500 hover:text-primary-700 dark:hover:text-primary-400 transition-colors"
+                    >
+                      <BookOpen className="h-4 w-4" />
+                      {t('vocabulary.viewList')}
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </Container>
     </AppLayout>
   );

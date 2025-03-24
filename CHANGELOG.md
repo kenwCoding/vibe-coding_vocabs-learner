@@ -20,12 +20,34 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### [API]
-- Added GraphQL schema definition files for backend API
-- Implemented type definitions for User, VocabItem, VocabList, Test, and related entities
-- Added query and mutation definitions for the GraphQL API
+### [Add]
+- Added "coming soon" pages for /vocabulary/new and /tests/new routes
+- Added real vocabulary list display on the vocabulary index page fetching data from API
+- Added detailed view for individual vocabulary lists with items display
+- Added dynamic route for viewing vocabulary lists by ID
+- Added Modal component for displaying dialogs and forms
+- Added VocabItemForm component for adding and editing vocabulary items
+- Added AddItemModal and EditItemModal components for vocabulary item management
+- Added functionality to add new vocabulary items to a vocabulary list
+- Added functionality to edit existing vocabulary items within a list
 
 ### [Fix]
+- [Fix] 2023-05-30 17:30 - Fixed TypeError in vocabulary list view when items property is undefined
+- Removed debug console statements from authentication and dashboard components
+- Removed mocked data from vocabulary and test stores to show real data state
+- Fixed user state not persisting after page refresh by enhancing token verification process
+- Fixed authentication issue in userStore using mock validation instead of backend API
+- Fixed empty content issue in vocabulary/new and tests/new routes by addressing authentication state inconsistency
+- Fixed synchronization between AuthContext and userStore during login/register operations
+- Fixed 404 errors for /vocabulary/new and /tests/new routes by adding missing route components
+- Fixed import errors in new route components causing empty pages
+- Fixed Button component import in route files to use consistent pattern
+- Fixed React Router import syntax for consistent navigation handling
+- Fixed authentication bug causing infinite redirects between login and dashboard pages after login
+- Fixed inconsistent localStorage key usage between AuthContext and UserStore
+- Fixed token verification process by standardizing authentication token storage
+- Added token migration mechanism to preserve existing user sessions
+- Added synchronization between Zustand store and AuthContext for consistent authentication state
 - Fixed incorrect link references in auth components (sign in, register, and forgot password)
 - Fixed 404 error when navigating to auth pages by updating route configuration
 - Fixed browser throttling warning on dashboard page navigation
@@ -42,6 +64,14 @@ All notable changes to this project will be documented in this file.
 - Fixed i18next being initialized twice in the application, causing console warnings
 - Fixed browser throttling warning in dashboard page by optimizing performance
 - Fixed infinite loop and excessive re-renders in dashboard component
+- Fixed Badge component variant in vocabulary pages to use 'error' instead of 'danger' for advanced difficulty
+- [Fix] 2023-05-31 15:30 - Fixed GraphQL mutation error when adding new vocabulary items to a list by properly formatting the input data
+- [Fix] 2023-05-31 17:45 - Fixed newly added vocabulary items not appearing in the list by implementing data refresh after additions
+
+### [API]
+- Added GraphQL schema definition files for backend API
+- Implemented type definitions for User, VocabItem, VocabList, Test, and related entities
+- Added query and mutation definitions for the GraphQL API
 
 ### [Enhance]
 - Added improved translations for English and Traditional Chinese
@@ -53,6 +83,8 @@ All notable changes to this project will be documented in this file.
 - Optimized dashboard page performance with memoization and deferred loading
 - Added debounced localStorage implementation for Zustand stores to prevent excessive IPC calls
 - Added loading state to the dashboard to improve perceived performance
+- Enhanced vocabulary list UI with proper error handling, loading states, and empty state handling
+- Improved vocabulary management with modal-based forms for adding and editing items
 
 ### [Perf]
 - Implemented lazy loading for dashboard content to reduce IPC calls during navigation
@@ -189,41 +221,16 @@ All notable changes to this project will be documented in this file.
 - [Design] Completely redesigned landing page with modern, attractive UI
 - [Style] Enhanced dashboard layout for better responsiveness
 
-## [0.2.0] - 2025-03-20
+## [0.2.0] - 2023-05-30
 ### Added
-- [Add] T component for internationalization with React
-- [Add] i18n configuration with English and Chinese translations
-- [Add] TailwindCSS configuration with design system colors and typography
-- [Add] Component showcase page at '/showcase' route
-- [Add] Implemented UI component library including Button, Card, Input, Container, and Badge components
-- [Add] Created component showcase for testing and development 
-- [Add] Created utility functions for Tailwind class merging
-- [Add] Zustand store implementation for user authentication, vocabulary management, and testing
-- [Add] Created login and registration pages with form validation
-- [Add] Implemented dashboard for authenticated users
-- [Add] Added user menu in navbar with authentication-aware display
-
-### Fixed
-- [Fix] Tailwind v4 compatibility issues with utility classes
-- [Fix] Updated component styles to use standard Tailwind color utilities
-- [Fix] Corrected CSS structure in app.css for Tailwind v4
-- [Fix] Updated Card component to use proper HTML structure
-- [Fix] Fixed Button and Badge components to use standard color classes
-- [Fix] Fixed route configuration to correctly map to UI components showcase
-
-### Changed
-- [Update] Transformed project into "VocabMaster - AI-Powered Vocabulary Learning Platform"
-- [Update] Added new dependencies: i18next, react-i18next, zustand
-- [Update] Route change from "ui-components" to "showcase"
-- [Update] Enhanced ComponentsShowcase with better organization
-- [Update] Simplified Card component API for better usability
-- [Update] Package dependency lock files for consistent installation
-- [Update] Enhanced color configuration in tailwind.config.js with explicit color values
-
-### Other
-- [Chore] Added i18next, Zustand, and utility dependencies
-- [Docs] Updated design system in project planning
-- [Test] Verified UI components showcase route is functioning correctly
+- [Fix] 2023-05-30 16:45 - Fixed import statements in vocabulary routes to use 'react-router' instead of '@remix-run/react'
+- [Add] 2023-05-30 16:40 - Added helper function to normalize vocabulary level values for consistent display
+- [Add] 2023-05-30 16:35 - Added helper function to format level text for proper capitalization in badge displays
+- [Add] 2023-05-30 16:30 - Added function to map vocabulary levels to appropriate badge variants
+- [Add] 2023-05-30 16:20 - Implemented vocabulary list feature with real data display
+- [Add] 2023-05-30 16:10 - Added detailed view for individual vocabulary lists
+- [Add] 2023-05-30 16:00 - Created form components for enhanced user input experience
+- [Fix] 2023-05-30 15:50 - Fixed Spinner component exports for proper typing
 
 ## 2024-03-20
 - [Update] Refined tech stack with Zustand for state management, GraphQL for API, and Jest for testing

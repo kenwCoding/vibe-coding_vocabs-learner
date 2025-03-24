@@ -1,1 +1,95 @@
- 
+# Backend Synchronization Rules
+
+- always check for backend API compatibility before implementing frontend services
+- always use the defined API contracts from the backend when implementing frontend services
+- always handle API errors gracefully with appropriate user feedback
+- always implement loading states for any asynchronous operations
+- never expose sensitive API keys or credentials in frontend code
+- always implement proper data validation before sending to backend
+- always use typed interfaces for API requests and responses
+- always document any deviations from backend API specifications
+- always consider offline scenarios and implement appropriate caching strategies
+- always use environment variables for API endpoints to support different environments (development, staging, production)
+
+## Backend Repository
+
+Backend code is available at: `../vibe-coding_vocabs-learner-server`
+
+## API Endpoints
+
+The following endpoints should be used for backend API communication:
+
+- **Production**: `https://vibe-coding-vocabs-learner-server.onrender.com`
+- **Local Development**: `http://localhost:4000`
+
+These should be configured in environment variables as follows:
+
+```typescript
+// .env.local (for local development)
+VITE_API_URL=http://localhost:4000
+
+// .env.production (for production build)
+VITE_API_URL=https://vibe-coding-vocabs-learner-server.onrender.com
+```
+
+Always reference these endpoints using the environment variable pattern:
+
+```typescript
+const apiUrl = import.meta.env.VITE_API_URL;
+```
+
+## Service Implementation Guidelines
+
+When implementing a new service that connects to the backend:
+
+1. First create a service interface that defines all methods and their types
+2. Implement proper error handling with specific error types
+3. Use consistent naming conventions that match backend endpoints
+4. Add unit tests for service methods with mocked API responses
+5. Document any assumptions about backend behavior
+6. Implement retry logic for transient failures when appropriate
+
+## API Consumption Pattern
+
+```typescript
+// Example pattern for consuming backend APIs
+import { useQuery, useMutation } from 'react-query';
+
+// Define types that match backend contract
+interface UserData {
+  id: string;
+  username: string;
+  email: string;
+}
+
+// Service implementation
+const fetchUser = async (userId: string): Promise<UserData> => {
+  try {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${apiUrl}/users/${userId}`);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw error;
+  }
+};
+
+// React component usage
+function UserProfile({ userId }) {
+  const { 
+    data: userData,
+    isLoading,
+    error
+  } = useQuery(['user', userId], () => fetchUser(userId));
+  
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage error={error} />;
+  
+  return <UserProfileView user={userData} />;
+}
+``` 

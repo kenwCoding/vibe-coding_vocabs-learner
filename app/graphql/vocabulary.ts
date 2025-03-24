@@ -35,7 +35,7 @@ export const GET_VOCAB_ITEMS = gql`
 
 export const GET_VOCAB_LIST = gql`
   query GetVocabList($id: ID!) {
-    getVocabList(id: $id) {
+    getVocabListById(id: $id) {
       id
       title
       description
@@ -47,6 +47,8 @@ export const GET_VOCAB_LIST = gql`
         definitionZh
         partOfSpeech
         difficultyRating
+        tags
+        exampleSentence
       }
       creator {
         id
