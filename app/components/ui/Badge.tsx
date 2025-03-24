@@ -3,6 +3,66 @@ import { cn } from '../../utils/cn';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 /**
+ * Helper function to normalize vocabulary level values
+ * Ensures consistent level values for badge display
+ */
+export function normalizeLevel(level: string | undefined): 'beginner' | 'intermediate' | 'advanced' {
+  if (!level) return 'beginner';
+  
+  console.log('Normalizing level:', level, typeof level);
+  
+  const normalizedLevel = String(level).toLowerCase().trim();
+  
+  if (normalizedLevel === 'beginner' || normalizedLevel === 'b' || normalizedLevel === 'beg') {
+    return 'beginner';
+  }
+  if (normalizedLevel === 'intermediate' || normalizedLevel === 'i' || normalizedLevel === 'int') {
+    return 'intermediate';  
+  }
+  if (normalizedLevel === 'advanced' || normalizedLevel === 'a' || normalizedLevel === 'adv') {
+    return 'advanced';
+  }
+  
+  // Handle potential numeric encodings (e.g., 1=beginner, 2=intermediate, 3=advanced)
+  if (normalizedLevel === '1' || normalizedLevel === 'easy') {
+    return 'beginner';
+  }
+  if (normalizedLevel === '2' || normalizedLevel === 'medium') {
+    return 'intermediate';  
+  }
+  if (normalizedLevel === '3' || normalizedLevel === 'hard') {
+    return 'advanced';
+  }
+  
+  console.log('Defaulting to beginner for level:', level);
+  return 'beginner'; // Default to beginner if unknown level
+}
+
+/**
+ * Helper function to get badge variant based on vocabulary level
+ */
+export function getLevelVariant(level: string | undefined): 'success' | 'warning' | 'error' {
+  const normalizedLevel = normalizeLevel(level);
+  
+  if (normalizedLevel === 'beginner') return 'success';
+  if (normalizedLevel === 'intermediate') return 'warning';
+  return 'error'; // Advanced or unknown
+}
+
+/**
+ * Helper function to format level for display with proper capitalization
+ */
+export function formatLevelForDisplay(level: string | undefined): string {
+  const normalizedLevel = normalizeLevel(level);
+  
+  if (normalizedLevel === 'beginner') return 'Beginner';
+  if (normalizedLevel === 'intermediate') return 'Intermediate';
+  if (normalizedLevel === 'advanced') return 'Advanced';
+  
+  return 'Unknown Level';
+}
+
+/**
  * Badge component variants using class-variance-authority for type-safe variants
  * Following the VocabMaster design system
  */

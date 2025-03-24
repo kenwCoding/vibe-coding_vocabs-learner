@@ -58,55 +58,14 @@ interface VocabularyState {
 const generateId = () => Math.random().toString(36).substring(2, 9);
 
 /**
- * Mock data for vocabulary items
+ * Empty initial vocabulary items
  */
-const mockVocabItems: Record<string, VocabItem> = {
-  'v1': {
-    id: 'v1',
-    term: 'ubiquitous',
-    definitionEn: 'Present, appearing, or found everywhere.',
-    definitionZh: '无所不在的，普遍存在的',
-    exampleSentence: 'Mobile phones have become ubiquitous in modern society.',
-    partOfSpeech: 'adjective',
-    difficultyRating: 4,
-    tags: ['formal', 'academic']
-  },
-  'v2': {
-    id: 'v2',
-    term: 'paradigm',
-    definitionEn: 'A typical example or pattern of something; a pattern or model.',
-    definitionZh: '范例，典范；模式',
-    exampleSentence: 'The company is a paradigm of successful industry.',
-    partOfSpeech: 'noun',
-    difficultyRating: 4,
-    tags: ['academic', 'business']
-  },
-  'v3': {
-    id: 'v3',
-    term: 'serendipity',
-    definitionEn: 'The occurrence and development of events by chance in a happy or beneficial way.',
-    definitionZh: '意外发现的礼物；机缘巧合',
-    exampleSentence: 'The discovery of penicillin was a serendipity.',
-    partOfSpeech: 'noun',
-    difficultyRating: 5,
-    tags: ['uncommon', 'positive']
-  }
-};
+const initialVocabItems: Record<string, VocabItem> = {};
 
 /**
- * Mock data for vocabulary lists
+ * Empty initial vocabulary lists
  */
-const mockVocabLists: Record<string, VocabList> = {
-  'l1': {
-    id: 'l1',
-    title: 'Advanced English Vocabulary',
-    description: 'A collection of advanced English words for academic writing',
-    level: 'advanced',
-    itemIds: ['v1', 'v2', 'v3'],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  }
-};
+const initialVocabLists: Record<string, VocabList> = {};
 
 /**
  * Vocabulary store to manage vocabulary items and lists
@@ -115,8 +74,8 @@ const mockVocabLists: Record<string, VocabList> = {
 export const useVocabularyStore = create<VocabularyState>()(
   persist(
     (set) => ({
-      vocabItems: mockVocabItems,
-      vocabLists: mockVocabLists,
+      vocabItems: initialVocabItems,
+      vocabLists: initialVocabLists,
       isLoading: false,
       error: null,
 

@@ -83,7 +83,7 @@ export interface VerifyTokenResponse {
 }
 
 // Authentication utilities
-export const TOKEN_KEY = 'vocabmaster_token';
+export const TOKEN_KEY = 'auth_token';
 
 export const getToken = (): string | null => {
   return safeLocalStorageGet(TOKEN_KEY);
